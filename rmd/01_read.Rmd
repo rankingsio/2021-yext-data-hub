@@ -3,3 +3,78 @@ title: "Data Cleaning and Preparation"
 output: html_document
 ---
 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(skimr) # summary statistics of a data frame
+# library(janitor)
+
+```
+
+## Read Data
+
+```{r load}
+
+files <- list.files(here::here("raw_data", "Yext SDH Exports for FrontPage/"))
+
+# store each file in a list of dataframes. 
+# str_sub to remove "Legal Services - " in the name
+# str_replace to remove white spaces and .csv
+yext_data <- list()
+for (i in seq_along(files)){
+  yext_data[[i]] <- rio::import(
+    here::here("raw_data", 
+               glue::glue("Yext SDH Exports for FrontPage/{files[i]}"))
+  ) %>%
+    mutate(char_date = paste(`Month of Date1`, as.character(`Year of Date1` ))) %>%
+    mutate(date = lubridate::my(char_date))
+}
+names(yext_data) <- stringr::str_replace(files, pattern = ".csv", replacement = "") %>%
+  stringr::str_replace_all(pattern = " ", replacement = "_") %>%
+  stringr::str_sub(18)
+
+# for some reason, the Listings Overview has a different data format...
+yext_data$Listings_Overview_Bar_YOY <- yext_data$Listings_Overview_Bar_YOY %>% 
+  mutate(date = lubridate::my(`Month of Date1`))
+
+```
+
+
+## View each dataset
+
+Check if see obvious issues:
+
+```{r view}
+
+for (yext_df in yext_data){
+  glimpse(yext_df)
+  print(skim(yext_df))
+  print("     -----     -----     -----     -----     -----     -----     -----     -----     -----     ")
+  print("     -----     -----     -----     -----     -----     -----     -----     -----     -----     ")
+  print("     -----     -----     -----     -----     -----     -----     -----     -----     -----     ")
+  
+}
+
+```
+
+
+## Data Cleaning
+
+Apparently none needed for now.
+
+## Save DataFrames in a List
+
+We save all files in a single list, to ease access and manipulation later.
+
+```{r}
+
+rio::export(yext_data, here::here("proc_data", "yext_data.rds"))
+
+```
+
+
+
+
+
+

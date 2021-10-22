@@ -1,5 +1,5 @@
 ---
-title: "[Add study name]"
+title: "Yext DataHub"
 author: ""
 date: "Last updated on `r Sys.Date()`"
 output:
@@ -48,14 +48,17 @@ h3 {
 
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(warning = FALSE, message = FALSE, fig.showtext = TRUE, dpi = 700)
+knitr::opts_chunk$set(warning = FALSE, message = FALSE, fig.showtext = TRUE, 
+                      dev = "svg"
+                      # dpi = 700
+                      )
 
 knitr::knit_hooks$set(inline = function(x) {
   prettyNum(x, big.mark = ",", small.mark = ",", scientific = F)
 })
 
-Sys.setlocale("LC_TIME", "C")
-extrafont::loadfonts(device = "win")
+# Sys.setlocale("LC_TIME", "C")
+# extrafont::loadfonts(device = "win")
 ```
 
 
@@ -63,7 +66,8 @@ extrafont::loadfonts(device = "win")
 ```{r prep}
 ## packages: remove or add your necessary packages
 
-required_packages <- c("tidyverse", "readxl", "ggthemes", "hrbrthemes", "extrafont", "plotly", "scales", "stringr", "gganimate", "here", "tidytext", "sentimentr", "scales", "DT", "here", "sm", "mblm", "glue", "fs", "knitr", "rmdformats", "janitor", "urltools", "colorspace", "pdftools", "showtext")
+# required_packages <- c("tidyverse", "readxl", "ggthemes", "hrbrthemes", "extrafont", "plotly", "scales", "stringr", "gganimate", "here", "tidytext", "sentimentr", "scales", "DT", "here", "sm", "mblm", "glue", "fs", "knitr", "rmdformats", "janitor", "urltools", "colorspace", "pdftools", "showtext")
+required_packages <- c("tidyverse")
 
 for(i in required_packages) { 
 if(!require(i, character.only = T)) {
@@ -189,42 +193,36 @@ theme_map <-
 ## numeric format for labels
 num_format <- scales::format_format(big.mark = ",", small.mark = ",", scientific = F)
 
-## main color backlinko
-bl_col <- "#00d188"
-bl_dark <- darken(bl_col, .3, space = "HLS")
-
-## colors + labels for interval stripes
-int_cols <- c("#bce2d5", "#79d8b6", bl_col, "#009f66", "#006c45", "#003925")
-int_perc <- c("100%", "95%", "75%", "50%", "25%", "5%")
-
-## colors for degrees (Bachelors, Massters, Doctorate in reverse order)
-cols_degree <- c("#e64500", "#FFCC00", darken(bl_col, .1))
-
-## gradient colors for position
-colfunc <- colorRampPalette(c(bl_col, "#bce2d5"))
-pos_cols <- colfunc(10)
+# ## main color backlinko
+# bl_col <- "#00d188"
+# bl_dark <- darken(bl_col, .3, space = "HLS")
+# 
+# ## colors + labels for interval stripes
+# int_cols <- c("#bce2d5", "#79d8b6", bl_col, "#009f66", "#006c45", "#003925")
+# int_perc <- c("100%", "95%", "75%", "50%", "25%", "5%")
+# 
+# ## colors for degrees (Bachelors, Massters, Doctorate in reverse order)
+# cols_degree <- c("#e64500", "#FFCC00", darken(bl_col, .1))
+# 
+# ## gradient colors for position
+# colfunc <- colorRampPalette(c(bl_col, "#bce2d5"))
+# pos_cols <- colfunc(10)
 ```
 
 # load data
 
+```{r}
 
+yext_data <- rio::import(here::here("proc_data", "yext_data.rds"))
+
+```
+
+# Data Preview
 
 ```{r}
 
-# 1 saving plots in pdf with example
 
-ggplot(data = mpg, mapping = aes(x = displ, y = hwy, color= drv)) + 
-     geom_smooth(mapping = aes(linetype = drv), method = 'loess') +
-     geom_point()
 
-if(save == T){ 
-  ggsave(here::here("plots", "name_plot.pdf"), name_plot, 
-         width = 12.5, height = 8, device = cairo_pdf)
-}
-
-# 2 pdfs will then be converted into the pngs using the 04_convert_pdfs_to_pngs.rmd file. 
 ```
-
-
 
 
