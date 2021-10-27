@@ -218,7 +218,12 @@ yext_data <- rio::import(here::here("proc_data", "yext_data.rds"))
 
 # Background
 
-Data from Yext DataHub: [yext.com/search-data-hub](https://www.yext.com/search-data-hub).  
+The goal of the project is to showcase in a clear and elegant manner some findings from the [Yext DataHub](https://www.yext.com/search-data-hub) that are relevant for the clients of Rankings.io. This is useful and provides added value because the Yext DataHub is buggy, not easy to understand, and not focused on legal services. We requested a data extraction to Yext: all data about legal services in USA.
+
+legal services
+
+
+Data from : .  
 
 Link to a "data dictionary": https://help.yext.com/hc/en-us/articles/360000001103-Available-metrics
 
@@ -248,7 +253,7 @@ yext_data$Listings_Overview_Bar_YOY %>%
 
 It seems that we don't have the data from the right column of the "Metrics Overview" tab: Pages Metrics YoY...  
 
-## Longtail Impressions and Clicks
+## Longtail Impressions and Clicks - Search Network Clicks by Type
 
 This data is in the tab "Search Network Listings Clicks" with a title of "Search Network Clicks by Type".  
 
@@ -317,10 +322,13 @@ They are separated in several tables:
 
 * G_DDs_YOY
 * G_DDs
+* G_PCs_YOY
 * ...
 
+**Google Phone Calls Per Loc:**  
 ```{r, fig.align='center', fig.height=4, fig.width=6}
 
+# only 2020 and 2021
 yext_data$G_DDs_YOY %>%
   ggplot(aes(x = date, y = `Avg. Google Phone Calls Per Loc` )) +
   geom_line()
@@ -329,12 +337,58 @@ yext_data$G_DDs_YOY %>%
 
 ```{r, fig.align='center', fig.height=4, fig.width=6}
 
+yext_data$G_PCs_YOY %>% 
+  ggplot(aes(x = date, y = `% Difference in Avg. Google Phone Calls Per Loc` )) +
+  geom_col() +
+  scale_y_continuous(labels = scales::percent)
+```
+
+```{r, fig.align='center', fig.height=4, fig.width=6}
+
+# all 3 years, we should prefer this one as the first above
+yext_data$G_PCs %>%
+  ggplot(aes(x = date, y = `Avg. Google Phone Calls Per Loc` )) +
+  geom_line()
+
+```
+
+**Google Website Clicks Per Loc:**  
+```{r, fig.align='center', fig.height=4, fig.width=6}
+
+# only 2020-2021
 yext_data$G_DDs_YOY %>%
   ggplot(aes(x = date, y = `Avg. Google Website Clicks Per Loc` )) +
   geom_line()
 
 ```
 
+```{r, fig.align='center', fig.height=4, fig.width=6}
+
+# exactly the same data as above, only 2020-2021
+yext_data$G_PCs_YOY %>%
+  ggplot(aes(x = date, y = `Avg. Google Website Clicks Per Loc` )) +
+  geom_line()
+
+```
+
+```{r, fig.align='center', fig.height=4, fig.width=6}
+
+# all 3 years, we should prefer this one as the two above
+yext_data$G_PCs %>%
+  ggplot(aes(x = date, y = `Avg. Google Website Clicks Per Loc` )) +
+  geom_line()
+
+```
+
+```{r, fig.align='center', fig.height=4, fig.width=6}
+
+yext_data$G_WCs_YOY %>%
+  ggplot(aes(x = date, y = `% Difference in Avg. Google Website Clicks Per Loc` )) +
+  geom_col() +
+  scale_y_continuous(labels = scales::percent)
+```
+
+**Google Driving Directions Per Loc:**  
 ```{r, fig.align='center', fig.height=4, fig.width=6}
 
 yext_data$G_DDs_YOY %>%
@@ -344,7 +398,6 @@ yext_data$G_DDs_YOY %>%
 
 ```
 
-
 ```{r, fig.align='center', fig.height=4, fig.width=6}
 
 yext_data$G_DDs %>%
@@ -353,10 +406,17 @@ yext_data$G_DDs %>%
 
 ```
 
+```{r, fig.align='center', fig.height=4, fig.width=6}
 
-[complete this]
+# THIS IS ONLY 2020 -> prefer G_DDs !
+yext_data$G_PCs_YOY %>%
+  ggplot(aes(x = date, y = `Avg. Google Driving Directions Per Loc` )) +
+  geom_line()
 
-## Google my Business Impressions
+```
+
+
+## Google my Business Impressions - Google Listings Impressions
 
 Data from the tab "Google Listings Impressions". 
 
