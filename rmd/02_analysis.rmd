@@ -248,10 +248,12 @@ yext_data$Listings_Overview_Bar_YOY %>%
 
 * large effect of COVID on Google driving directions and Maps views. 
 * same for Direct Queries. Start of the business again? 
-* recent inncrease of Extended Network Clicks. ?
+* recent increase of Extended Network Clicks. ?
 
 
-It seems that we don't have the data from the right column of the "Metrics Overview" tab: Pages Metrics YoY...  
+It seems that we don't have the data from the right column of the "Metrics Overview" tab: Pages Metrics YoY...   
+
+
 
 ## Longtail Impressions and Clicks - Search Network Clicks by Type
 
@@ -422,10 +424,50 @@ Data from the tab "Google Listings Impressions".
 
 Datasets: G_MVs_YOY and G_MVs.  
 
-[plots here]
+**Google Maps Views:**  
+
+```{r, fig.align='center', fig.height=4, fig.width=6}
+
+yext_data$G_MVs %>% 
+  ggplot(aes(x = date, y = `Avg. Google Maps Views Per Loc` )) +
+  geom_line()
+
+```
 
 
-## ... 
+**Google Search Views:**  
+
+```{r, fig.align='center', fig.height=4, fig.width=6}
+
+yext_data$G_MVs %>% 
+  ggplot(aes(x = date, y = `Avg. Google Search Views Per Loc` )) +
+  geom_line()
+
+```
+
+
+
+## Google Listings Queries - Google My Business Queries
+
+Data from the tab "Google Listings Queries / Google My Business Queries": Google Discovery Queries, Google Direct Queries, Google Branded Queries.   
+
+**We did not receive these data from Yext...**  
+
+
+## Google Search CTR 
+
+Data from the tab "Google Search CTR / Google Search Console CTR". 
+
+**We did not receive these data from Yext...**  
+
+
+## Page Views & Onpage CTR
+
+Data from the tab "Page Views & Onpage CTR / Page Views & Onpage CTR". 
+
+**We did not receive these data from Yext...**  
+
+
 
 
 
