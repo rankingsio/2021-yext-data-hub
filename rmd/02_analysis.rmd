@@ -242,7 +242,8 @@ yext_data$Listings_Overview_Bar_YOY %>%
     aes(x = date, y = `Measure Values`)
   ) +
   geom_col() +
-  facet_wrap(facets = vars(`Measure Names`), ncol = 4)
+  facet_wrap(facets = vars(`Measure Names`), ncol = 4) +
+  scale_y_continuous(labels = scales::percent)
 
 ```
 
@@ -260,6 +261,7 @@ It seems that we don't have the data from the right column of the "Metrics Overv
 This data is in the tab "Search Network Listings Clicks" with a title of "Search Network Clicks by Type".  
 
 **% Difference in Avg. Longtail Impressions Per Loc - YoY:**
+_Total Listings Impressions: The number of times your listing appeared in search results across Google Maps, Google Search, Bing, Facebook, and the broader network._
 
 ```{r, fig.align='center', fig.height=4, fig.width=6}
 
@@ -328,7 +330,10 @@ They are separated in several tables:
 * ...
 
 **Google Phone Calls Per Loc:**  
-```{r, fig.align='center', fig.height=4, fig.width=6}
+_The number of times a user clicked on the phone call link from a Google listing_
+(Probably not this other definition: _The number of times a consumer has performed the phone call action on your location pages_)
+
+```{r, fig.align='center', fig.height=4, fig.width=6, include=FALSE}
 
 # only 2020 and 2021
 yext_data$G_DDs_YOY %>%
@@ -355,7 +360,9 @@ yext_data$G_PCs %>%
 ```
 
 **Google Website Clicks Per Loc:**  
-```{r, fig.align='center', fig.height=4, fig.width=6}
+_The number of times a consumer clicked through to the corporate domain from a location page_
+
+```{r, fig.align='center', fig.height=4, fig.width=6, include=FALSE}
 
 # only 2020-2021
 yext_data$G_DDs_YOY %>%
@@ -364,7 +371,7 @@ yext_data$G_DDs_YOY %>%
 
 ```
 
-```{r, fig.align='center', fig.height=4, fig.width=6}
+```{r, fig.align='center', fig.height=4, fig.width=6, include=FALSE}
 
 # exactly the same data as above, only 2020-2021
 yext_data$G_PCs_YOY %>%
@@ -391,6 +398,8 @@ yext_data$G_WCs_YOY %>%
 ```
 
 **Google Driving Directions Per Loc:**  
+_The number of times a consumer clicked to get driving directions from your location pages_
+
 ```{r, fig.align='center', fig.height=4, fig.width=6}
 
 yext_data$G_DDs_YOY %>%
@@ -408,7 +417,7 @@ yext_data$G_DDs %>%
 
 ```
 
-```{r, fig.align='center', fig.height=4, fig.width=6}
+```{r, fig.align='center', fig.height=4, fig.width=6, include=FALSE}
 
 # THIS IS ONLY 2020 -> prefer G_DDs !
 yext_data$G_PCs_YOY %>%
@@ -468,10 +477,20 @@ Data from the tab "Page Views & Onpage CTR / Page Views & Onpage CTR".
 **We did not receive these data from Yext...**  
 
 
+******
 
 
+A look at the metrics separately / thematically.
 
 
+## Google Maps
+
+
+* Google Maps Views
+_The number of times the listing was viewed on a Google Map. Google Map Views and Google Search Views together represent the total number of impressions your listings receive across the Google ecosystem._
+
+* Google Google Driving Directions Per Loc
+* 
 
 
 
