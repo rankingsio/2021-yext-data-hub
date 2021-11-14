@@ -3,7 +3,7 @@ title: "Yext DataHub"
 author: |
   | Lead: Chris Dreyer ([rankings.io](https://rankings.io/))
   | Support: François Delavy & Daniel Kupka ([frontpagedata.com](https://frontpagedata.com/))
-date: "Last updated on 2021-11-13"
+date: "Last updated on 2021-11-14"
 output:
   html_document:
     theme: paper
@@ -84,6 +84,8 @@ The data published by Yext, and presented in this analysis, are better compared 
 * Clicks
 * Views
 
+2) Are “listing”, "website URL” and “entity” three words that represent the same thing?  
+_Not quite. An entity would be an actual location, a physician, an ATM. Any real-world object in this case. A listing is what you see in a local pack or a map pack on a search engine. The screenshot below shows three Google listings for Dominos entities (locations in this case). When managed properly each of these location entities has several listings on other search engines like Bing, Yahoo, etc. A website URL would depend on the context but for the sake of this data generally refers to the local page associated with a location. Let me know where you see that phrase and I can elaborate. Screenshots attached to illustrate these last two._
 
 # Research Findings 
 
@@ -95,10 +97,18 @@ The _impressions_ represent the number of times a sample of listings appeared in
 ![](03_final_files/figure-html/unnamed-chunk-1-1.svg)<!-- -->
 
 
-There does not seem to be a correlation between the _impressions_ and the _clicks_. This is confirmed by the Pearson correlation coefficient: $r = -0.03$. In other words, there does not seems that there is a correlation between the number of impressions and the clicks. However, this results might be due to the fact that only a few clicks were collected for the Legal Services, only an average of 2 to 4 per month. The data might be too small for such a statistical comparison.   
+Visually, there does not seem to be a large correlation between the _impressions_ and the _clicks_. However, the Pearson correlation coefficient is $r = 0.56$. In other words, there is some correlation between the number of impressions and the clicks. This is driven by the large common increase in fall 2021. However, this results might be due to the fact that only a few clicks were collected for the Legal Services, only an average of 2 to 4 per month. The data might be too small for such a statistical comparison.   
 
 ## Industry Comparison
 
+We compare the Extended Network Impressions and Clicks from the _legal services_ to the same metrics for _all the industries_. By doing so, we compare the performance of listings in the _legal services_ to the global average.  
+
+![](03_final_files/figure-html/unnamed-chunk-2-1.svg)<!-- -->
+
+The _Average Extended Network Impressions for Longtail Keywords_ is more than `` Impressions of 
+
+
+When measured on the whole industrry, there is a much larger correlation between the impressions and the clicks: the Pearson correlation coefficient is $r = 0.82$.  
 
 # Google My Business
 
@@ -108,7 +118,7 @@ This chapter focuses on the Google ecosystem.
 
 The _Average Google Maps Views Per Location_ represents number of times the listing was viewed on a Google Map. The _Average Google Search Views Per Location_ represents the number of times the listing was viewed on Google Search. Google Map Views and Google Search Views together represent the total number of impressions listings receive across the Google ecosystem.
 
-<img src="03_final_files/figure-html/unnamed-chunk-2-1.svg" style="display: block; margin: auto;" />
+<img src="03_final_files/figure-html/unnamed-chunk-3-1.svg" style="display: block; margin: auto;" />
 
 
 The _Average Google Maps Views Per Location_ decreases dramatically at the beginning of the COVID pandemic and is slowly recovering.   
@@ -119,15 +129,15 @@ The _Average Google Search Views Per Location_ is growing steadily since mid-202
 
 The _Average Google Phone Calls Per Location_ represents the number of times a user clicked on the phone call link from a Google listing. There was a clear dip at the onset of the COVID pandemic. This metric has reached the maximum level again since.    
 
-![](03_final_files/figure-html/unnamed-chunk-3-1.svg)<!-- -->
+![](03_final_files/figure-html/unnamed-chunk-4-1.svg)<!-- -->
 
 The _Average Google Website Clicks Per Location_ represents the number of times a consumer clicked through to the corporate domain from a location page. There was a clear dip at the onset of the COVID pandemic. This metric has reached the maximum level again since.     
 
-![](03_final_files/figure-html/unnamed-chunk-4-1.svg)<!-- -->
+![](03_final_files/figure-html/unnamed-chunk-5-1.svg)<!-- -->
 
 The _Average Google Driving Directions Per Location_ represents the number of times a consumer clicked to get driving directions from the location pages. This metric is slowly coming back to pre-pandemic levels.     
 
-![](03_final_files/figure-html/unnamed-chunk-5-1.svg)<!-- -->
+![](03_final_files/figure-html/unnamed-chunk-6-1.svg)<!-- -->
 
 
 

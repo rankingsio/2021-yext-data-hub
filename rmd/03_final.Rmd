@@ -128,15 +128,26 @@ num_format <- scales::format_format(big.mark = ",", small.mark = ",", scientific
 
 # LOAD DATA sent by Yext:
 yext_data <- rio::import(here::here("proc_data", "yext_data.rds"))
-# need to add: sep, oct.
-impressions 123.9, 127.7
-clicks 5.99 6.09
+
+# we append new values to the Yext Data
+# these are the values of the last 2 months absent from the data sent by Yext.
+# these were collected manually online.
+new_Longtail_Imps_and_Clicks <- tibble(
+  `Month of Date1` = c("September", "October"),
+  `Year of Date1` = c(2021, 2021),
+  `Avg. Longtail Clicks Per Loc` = c(5.99, 6.09),
+  `Avg. Longtail Impressions Per Loc` = c(123.9, 127.7),
+  char_date = c("September 2021", "October 2021"),
+  date = lubridate::as_date(c("2021-09-01", "2021-10-01"), format = "%Y-%m-%d")
+)
+yext_data$Longtail_Imps_and_Clicks <- yext_data$Longtail_Imps_and_Clicks %>% 
+  rbind(new_Longtail_Imps_and_Clicks)
 
 # load data collected online for key comparisons:
 extend_network_listings_all_industries <- rio::import(here::here(
   "proc_data",
   "Search_Network_Listings-all_verticals-USA-(2021-11-14).csv")
-  ) %>%
+) %>%
   mutate(date = lubridate::as_date(date, format = "%d.%m.%Y"))
 
 ```
@@ -168,7 +179,7 @@ The data published by Yext, and presented in this analysis, are better compared 
 * Impressions:
 * Clicks
 * Views
- 
+
 2) Are “listing”, "website URL” and “entity” three words that represent the same thing?  
 _Not quite. An entity would be an actual location, a physician, an ATM. Any real-world object in this case. A listing is what you see in a local pack or a map pack on a search engine. The screenshot below shows three Google listings for Dominos entities (locations in this case). When managed properly each of these location entities has several listings on other search engines like Bing, Yahoo, etc. A website URL would depend on the context but for the sake of this data generally refers to the local page associated with a location. Let me know where you see that phrase and I can elaborate. Screenshots attached to illustrate these last two._
 
@@ -214,7 +225,7 @@ rcor <- cor(yext_data$Longtail_Imps_and_Clicks$`Avg. Longtail Impressions Per Lo
 ```
 
 
-There does not seem to be a correlation between the _impressions_ and the _clicks_. This is confirmed by the Pearson correlation coefficient: $r = `r round(rcor, 2)`$. In other words, there does not seems that there is a correlation between the number of impressions and the clicks. However, this results might be due to the fact that only a few clicks were collected for the Legal Services, only an average of 2 to 4 per month. The data might be too small for such a statistical comparison.   
+Visually, there does not seem to be a large correlation between the _impressions_ and the _clicks_. However, the Pearson correlation coefficient is $r = `r round(rcor, 2)`$. In other words, there is some correlation between the number of impressions and the clicks. This is driven by the large common increase in fall 2021. However, this results might be due to the fact that only a few clicks were collected for the Legal Services, only an average of 2 to 4 per month. The data might be too small for such a statistical comparison.   
 
 ## Industry Comparison
 
@@ -222,42 +233,75 @@ We compare the Extended Network Impressions and Clicks from the _legal services_
 
 ```{r fig.width=8}
 
-tmp <- yext_data$Longtail_Imps_and_Clicks %>%
+Longtail_Imps_and_Clicks_all_data <- yext_data$Longtail_Imps_and_Clicks %>%
   select(date, impressions = `Avg. Longtail Impressions Per Loc`, clicks = `Avg. Longtail Clicks Per Loc`) %>%
   mutate(source = "legal_services") %>%
-  cbind(extend_network_listings_all_industries)
+  rbind(extend_network_listings_all_industries) %>%
+  pivot_longer(cols = c(impressions, clicks), names_to = "metric", values_to = "value")
 
-Impressions <- yext_data$Longtail_Imps_and_Clicks %>% 
-  ggplot(aes(x = date, y = `Avg. Longtail Impressions Per Loc`)) +
+Impressions <- Longtail_Imps_and_Clicks_all_data %>% 
+  filter(metric == "impressions") %>%
+  ggplot(aes(x = date, y = value, color = source)) +
   geom_line() + 
   labs(title = "Average Extended Network Impressions",
        subtitle = "For Longtail Keywords",
-       caption = "Industry: Legal Services, Geography: U.S.") +
+       caption = "Geography: U.S.") +
+  scale_color_manual(values = c(r_col, "black")) +
   xlab("") +
   ylab("") +
-  my_theme()
+  my_theme() +
+  annotate("text", x = lubridate::as_date("2019-10-01"), y = 100, label = "Legal Services") +
+  annotate("text", x = lubridate::as_date("2020-01-01"), y = 230, label = "All Industries", color = r_col) +
+  theme(legend.position = "none")
 
-Clicks <- yext_data$Longtail_Imps_and_Clicks %>% 
-  ggplot(aes(x = date, y = `Avg. Longtail Clicks Per Loc` )) +
+
+Clicks <- Longtail_Imps_and_Clicks_all_data %>% 
+  filter(metric == "clicks") %>%
+  ggplot(aes(x = date, y = value, color = source)) +
   geom_line() + 
   labs(title = "Average Extended Network Clicks",
        subtitle = "For Longtail Keywords",
-       caption = "Industry: Legal Services, Geography: U.S.") +
+       caption = "Geography: U.S.") +
+  scale_color_manual(values = c(r_col, "black")) +
   xlab("") +
   ylab("") +
-  my_theme()
+  my_theme()  +
+  annotate("text", x = lubridate::as_date("2019-08-01"), y = 3, label = "Legal Services") +
+  annotate("text", x = lubridate::as_date("2020-01-01"), y = 22, label = "All Industries", color = r_col) +
+  theme(legend.position = "none")
 
 
 Impressions + Clicks
 
-# yext_data$Longtail_Imps_and_Clicks %>% 
-#   select(date, `Avg. Longtail Impressions Per Loc`, `Avg. Longtail Clicks Per Loc` ) %>%
-#   pivot_longer(cols = c(`Avg. Longtail Impressions Per Loc`, `Avg. Longtail Clicks Per Loc`), 
-#                names_to = "measure", values_to = "values")
+# correlation btw Impressions and Clicks for All_Industry
+rcor_allindustry <- cor(
+  Longtail_Imps_and_Clicks_all_data %>% filter(source == "all_verticals", metric == "impressions") %>% .$value, 
+  Longtail_Imps_and_Clicks_all_data %>% filter(source == "all_verticals", metric == "clicks") %>% .$value)
 
-rcor <- cor(yext_data$Longtail_Imps_and_Clicks$`Avg. Longtail Impressions Per Loc`, yext_data$Longtail_Imps_and_Clicks$`Avg. Longtail Clicks Per Loc`)
+# some basic stats:
+avg_impressions_allindustry = Longtail_Imps_and_Clicks_all_data %>% 
+  filter(source == "all_verticals", metric == "impressions") %>%
+  .$value %>%
+  mean()
+avg_clicks_allindustry = Longtail_Imps_and_Clicks_all_data %>% 
+  filter(source == "all_verticals", metric == "clicks") %>%
+  .$value %>%
+  mean()
+avg_impressions_legalservices = Longtail_Imps_and_Clicks_all_data %>% 
+  filter(source == "legal_services", metric == "impressions") %>%
+  .$value %>%
+  mean()
+avg_clicks_legalservices = Longtail_Imps_and_Clicks_all_data %>% 
+  filter(source == "legal_services", metric == "clicks") %>%
+  .$value %>%
+  mean()
+
 ```
 
+The _Average Extended Network Impressions for Longtail Keywords_ is for _all industries together_ is `r round(avg_impressions_allindustry/avg_impressions_legalservices, 1)` times larger than for _legal services_. The gap is even larger for the _Clicks_, it is `r round(avg_clicks_allindustry/avg_clicks_legalservices, 1)` times larger for _all industries together_ than for _legal services_. This suggests that _legal services_ have generally less success in turning impressions into clicks (for this sample of listings).  
+
+
+When measured on the whole industry, there is a much larger correlation between the impressions and the clicks: the Pearson correlation coefficient is $r = `r round(rcor_allindustry, 2)`$.  
 
 # Google My Business
 
