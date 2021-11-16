@@ -3,7 +3,7 @@ title: "Yext DataHub"
 author: |
   | Lead: Chris Dreyer ([rankings.io](https://rankings.io/))
   | Support: François Delavy & Daniel Kupka ([frontpagedata.com](https://frontpagedata.com/))
-date: "Last updated on 2021-11-14"
+date: "Last updated on 2021-11-15"
 output:
   html_document:
     theme: paper
@@ -98,15 +98,23 @@ The _impressions_ represent the number of times a sample of listings appeared in
 
 There is a sudden increase in the _Average Extended Network Clicks_ since summer 2021.  
 
-Visually, there does not seem to be a large correlation between the _impressions_ and the _clicks_, except for the recent increase. However, the Pearson correlation coefficient is $r = 0.56$. This coefficient oscillate between 0, there is no linear correlation, the clicks have no relations to impressions, and 1, there is a perfect correlation between impressions and clicks. There is some correlation between the number of impressions and the clicks, meaning that the number of clicks is not completely independent from the number of impressions. However, this relation is not perfect and an increase in the number of impressions is not necessarily, directly and completely reflected in the number of clicks.    
+Visually, there does not seem to be a large correlation between the _impressions_ and the _clicks_, except for the recent increase. However, the Pearson correlation coefficient is $r = 0.56$. This coefficient oscillate between 0, there is no linear correlation, the clicks have no relations to impressions, and 1, there is a perfect correlation between impressions and clicks. There is some correlation between the number of impressions and the clicks, meaning that the number of clicks is not completely independent from the number of impressions. However, this relation is not perfect and an increase in the number of impressions is not necessarily, directly and completely reflected in the number of clicks.  
+
+### Click-Through Rate
+
+As Yext is sharing both impressions and clicks, we can compute the average _Click-Through Rate_ (CTR): $CTR = clicks / impressions$. 
+
+![](03_final_files/figure-html/unnamed-chunk-2-1.svg)<!-- -->
+
+The average CTR inn _legal services_ for longtail keywords in the extended network (Google Maps, Google Search, Bing, Facebook, and the broader network) is of 2.66%.  
 
 ### Industry Comparison
 
 We compare the Extended Network Impressions and Clicks from the _legal services_ to the same metrics for _all the industries_. By doing so, we compare the performance of listings in the _legal services_ to the global average.  
 
-![](03_final_files/figure-html/unnamed-chunk-2-1.svg)<!-- -->
+![](03_final_files/figure-html/unnamed-chunk-3-1.svg)<!-- -->
 
-The _Average Extended Network Impressions for Longtail Keywords_ for _all industries together_ is 2.7 times larger than for _legal services_. The gap is even larger for the _Clicks_, it is 8.7 times larger for _all industries together_ than for _legal services_. This suggests that, in this sample, _legal services_ have generally less success in turning impressions into clicks.   
+The _Average Extended Network Impressions for Longtail Keywords_ for _all industries together_ is 2.7 times larger than for _legal services_. The gap is even larger for the _Clicks_: it is 8.7 times larger for _all industries together_ than for _legal services_. This suggests that, in this sample, _legal services_ have generally less success in turning impressions into clicks. This is reflected in the CTR, which is on average 8.76%, much higher than the average CTR shown above for the _legal services_: 2.66%.  
 
 When measured on the whole industry, there is a much larger correlation between the impressions and the clicks: the Pearson correlation coefficient is $r = 0.82$.  
 
@@ -119,7 +127,7 @@ This chapter focuses on the Google ecosystem.
 
 The _Average Google Maps Views Per Location_ represents number of times the listing was viewed on a Google Map. The _Average Google Search Views Per Location_ represents the number of times the listing was viewed on Google Search. Google Map Views and Google Search Views together represent the total number of impressions listings receive across the Google ecosystem.
 
-<img src="03_final_files/figure-html/unnamed-chunk-3-1.svg" style="display: block; margin: auto;" />
+<img src="03_final_files/figure-html/unnamed-chunk-4-1.svg" style="display: block; margin: auto;" />
 
 
 The _Average Google Maps Views Per Location_ decreases dramatically at the beginning of the COVID pandemic and is slowly recovering.   
@@ -130,15 +138,15 @@ The _Average Google Search Views Per Location_ is growing steadily since mid-202
 
 The _Average Google Phone Calls Per Location_ represents the number of times a user clicked on the phone call link from a Google listing. There was a clear dip at the onset of the COVID pandemic. This metric has reached the maximum level again since.    
 
-![](03_final_files/figure-html/unnamed-chunk-4-1.svg)<!-- -->
+![](03_final_files/figure-html/unnamed-chunk-5-1.svg)<!-- -->
 
 The _Average Google Website Clicks Per Location_ represents the number of times a consumer clicked through to the corporate domain from a location page. There was a clear dip at the onset of the COVID pandemic. This metric has reached the maximum level again since.     
 
-![](03_final_files/figure-html/unnamed-chunk-5-1.svg)<!-- -->
+![](03_final_files/figure-html/unnamed-chunk-6-1.svg)<!-- -->
 
 The _Average Google Driving Directions Per Location_ represents the number of times a consumer clicked to get driving directions from the location pages. This metric is slowly coming back to pre-pandemic levels.     
 
-![](03_final_files/figure-html/unnamed-chunk-6-1.svg)<!-- -->
+![](03_final_files/figure-html/unnamed-chunk-7-1.svg)<!-- -->
 
 
 
