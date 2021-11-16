@@ -143,6 +143,9 @@ new_Longtail_Imps_and_Clicks <- tibble(
 yext_data$Longtail_Imps_and_Clicks <- yext_data$Longtail_Imps_and_Clicks %>% 
   rbind(new_Longtail_Imps_and_Clicks)
 
+# Google Maps Views, Google search views
+# Google Drivinng Directions, phone calls, website clicks
+
 # load data collected online for key comparisons:
 extend_network_listings_all_industries <- rio::import(here::here(
   "proc_data",
@@ -375,7 +378,7 @@ The _Average Google Search Views Per Location_ is growing steadily since mid-202
 
 ### Clicks
 
-The _Average Google Phone Calls Per Location_ represents the number of times a user clicked on the phone call link from a Google listing. There was a clear dip at the onset of the COVID pandemic. This metric has reached the maximum level again since.    
+The _Average Google Phone Calls Per Location_ represents the number of times a user clicked on the phone call link from a Google listing. There was a clear dip of around -30% at the onset of the COVID pandemic. This metric has reached the maximum level again since.    
 
 ```{r fig.height=4}
 
@@ -390,7 +393,7 @@ yext_data$G_PCs %>%
 
 ```
 
-The _Average Google Website Clicks Per Location_ represents the number of times a consumer clicked through to the corporate domain from a location page. There was a clear dip at the onset of the COVID pandemic. This metric has reached the maximum level again since.     
+The _Average Google Website Clicks Per Location_ represents the number of times a consumer clicked through to the corporate domain from a location page. It seems that there was a small dip at the onset of the COVID pandemic, but it is less clear.     
 
 ```{r}
 yext_data$G_PCs %>%
@@ -403,7 +406,7 @@ yext_data$G_PCs %>%
   my_theme()
 ```
 
-The _Average Google Driving Directions Per Location_ represents the number of times a consumer clicked to get driving directions from the location pages. This metric is slowly coming back to pre-pandemic levels.     
+The _Average Google Driving Directions Per Location_ represents the number of times a consumer clicked to get driving directions from the location pages. This metric was clearly affected by the COVID pandemic. It dropped by 80% between February and april 2020. It is slowly recovering, now reaching about 80% of the pre-pandemic level.      
 
 ```{r}
 yext_data$G_DDs %>%
@@ -415,6 +418,8 @@ yext_data$G_DDs %>%
   ylab("") +
   my_theme()
 ```
+
+### Industry Comparison
 
 
 
