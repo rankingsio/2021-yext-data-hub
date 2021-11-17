@@ -129,6 +129,7 @@ num_format <- scales::format_format(big.mark = ",", small.mark = ",", scientific
 # LOAD DATA sent by Yext:
 yext_data <- rio::import(here::here("proc_data", "yext_data.rds"))
 
+
 # we append new values to the Yext Data
 # these are the values of the last 2 months absent from the data sent by Yext.
 # these were collected manually online.
@@ -144,14 +145,35 @@ yext_data$Longtail_Imps_and_Clicks <- yext_data$Longtail_Imps_and_Clicks %>%
   rbind(new_Longtail_Imps_and_Clicks)
 
 # Google Maps Views, Google search views
-# Google Drivinng Directions, phone calls, website clicks
+new_Google_Maps_and_Search_Views <- tibble(
+  `Month of Date1` = c("September", "October"),
+  `Year of Date1` = c(2021, 2021),
+  `Avg. Google Maps Views Per Loc` = c(1751, 1631),
+  `Avg. Google Search Views Per Loc` = c(1733.7, 1496.7),
+  char_date = c("September 2021", "October 2021"),
+  date = lubridate::as_date(c("2021-09-01", "2021-10-01"), format = "%Y-%m-%d")
+)
+yext_data$G_MVs <- yext_data$G_MVs %>%
+  rbind(new_Google_Maps_and_Search_Views)
+
+# Google Driving Directions, phone calls, website clicks
+
 
 # load data collected online for key comparisons:
+# these are the data about all industries:
+
 extend_network_listings_all_industries <- rio::import(here::here(
   "proc_data",
   "Search_Network_Listings-all_verticals-USA-(2021-11-14).csv")
 ) %>%
   mutate(date = lubridate::as_date(date, format = "%d.%m.%Y"))
+
+google_maps_and_search_views_all_industries <- rio::import(here::here(
+  "proc_data",
+  "Google Listings Impressions (2011-11-17).csv")
+) %>%
+  mutate(date = lubridate::as_date(date, format = "%d.%m.%Y"))
+
 
 ```
 
@@ -167,8 +189,14 @@ We have analyzed these data for the industry of the Legal Services. What can we 
 # Methodology
 Yext kindly provided us with a subset of the data from the Search Data Hub: data about _Legal Services_ (subvertical) coming from U.S. companies. We enriched these data with key spot comparisons observed directly on the online [Search Data Hub](https://www.yext.com/search-data-hub).  
 
+## About the Data
+
 Yext mentions that:  
 "The data is comprised  comprised of a sample of listing and local page data across a variety of search engines, and other digital endpoints. Insights are shown only on a region and industry level where there are sufficient businesses, locations, and search engine data sources to maintain anonymity and privacy for Yext customers and where Yext customers have adopted the platform for a sufficient period of time to provide a meaningful comparison year over year. As data may vary between regions due to, among other things, the sample size or availability of data for certain businesses and subverticals, industry insights may not be comparable across regions."  
+
+Sample Size for the "subvertical" of _Legal Services_ in the U.S.: 5409 businesses including 7249 entities.   
+Sample Size for the whole the U.S., all the industries (all subverticals): 5409 businesses including 7249 entities.   
+
 
 [add number of companies for the legal services here .] LISTING SAMPLE SiZE  
 
@@ -338,6 +366,12 @@ The _Average Extended Network Impressions for Longtail Keywords_ for _all indust
 
 When measured on the whole industry, there is a much larger correlation between the impressions and the clicks: the Pearson correlation coefficient is $r = `r round(rcor_allindustry, 2)`$.  
 
+```{r}
+
+# EVENTUALLY ADD HERE CORRELATION BTW INDUSTRY AND LEGAL SERVICES.
+
+```
+
 
 ## Google My Business
 
@@ -375,6 +409,54 @@ maps + searches
 The _Average Google Maps Views Per Location_ decreased by 73.6% between February and April 2020, at the beginning of the COVID pandemic, and is slowly recovering.   
 
 The _Average Google Search Views Per Location_ is growing steadily since mid-2020. It has never been so high.  
+
+#### Industry Comparison
+
+We compare the Google Maps and Search Views from the _legal services_ to the same metrics for _all the industries_. By doing so, we compare the performance of listings in the _legal services_ to the global average.   
+
+```{r fig.width=8}
+
+google_maps_and_search_views_all_data <- yext_data$G_MVs %>%
+  select(date, map_views = `Avg. Google Maps Views Per Loc`, search_views = `Avg. Google Search Views Per Loc`) %>%
+  mutate(source = "legal_services") %>%
+  rbind(google_maps_and_search_views_all_industries) %>%
+  pivot_longer(cols = c(map_views, search_views), names_to = "metric", values_to = "value")
+
+Map_Views <- google_maps_and_search_views_all_data %>% 
+  filter(metric == "map_views") %>%
+  ggplot(aes(x = date, y = value, color = source)) +
+  geom_line() + 
+  labs(title = "Average Google Maps Views Per Location",
+       # subtitle = "For Longtail Keywords",
+       caption = "Geography: U.S.") +
+  scale_color_manual(values = c(r_col, "black")) +
+  xlab("") +
+  ylab("") +
+  my_theme() +
+  annotate("text", x = lubridate::as_date("2019-10-01"), y = 4000, label = "Legal Services") +
+  annotate("text", x = lubridate::as_date("2020-08-20"), y = 18000, label = "All Industries", color = r_col) +
+  theme(legend.position = "none")
+
+Search_Views <- google_maps_and_search_views_all_data %>% 
+  filter(metric == "search_views") %>%
+  ggplot(aes(x = date, y = value, color = source)) +
+  geom_line() + 
+  labs(title = "Average Google Search Views Per Location",
+       # subtitle = "For Longtail Keywords",
+       caption = "Geography: U.S.") +
+  scale_color_manual(values = c(r_col, "black")) +
+  xlab("") +
+  ylab("") +
+  my_theme() +
+  annotate("text", x = lubridate::as_date("2019-10-01"), y = 2000, label = "Legal Services") +
+  annotate("text", x = lubridate::as_date("2019-09-01"), y = 7400, label = "All Industries", color = r_col) +
+  theme(legend.position = "none")
+
+Map_Views + Search_Views
+
+
+```
+
 
 ### Clicks
 
