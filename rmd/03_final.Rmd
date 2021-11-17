@@ -156,7 +156,28 @@ new_Google_Maps_and_Search_Views <- tibble(
 yext_data$G_MVs <- yext_data$G_MVs %>%
   rbind(new_Google_Maps_and_Search_Views)
 
-# Google Driving Directions, phone calls, website clicks
+# Google Driving Directions -> G_DDs
+new_Google_Driving_Directions <- tibble(
+  `Month of Date1` = c("September", "October"),
+  `Year of Date1` = c(2021, 2021),
+  `Avg. Google Driving Directions Per Loc` = c(21.2, 20),
+  char_date = c("September 2021", "October 2021"),
+  date = lubridate::as_date(c("2021-09-01", "2021-10-01"), format = "%Y-%m-%d")
+)
+yext_data$G_DDs <- yext_data$G_DDs %>% 
+  rbind(new_Google_Driving_Directions)
+
+# phone calls, website clicks -> G_PCs
+new_Google_phonecalls_and_websiteclicks <- tibble(
+  `Month of Date1` = c("September", "October"),
+  `Year of Date1` = c(2021, 2021),
+  `Avg. Google Phone Calls Per Loc` = c(30, 27),
+  `Avg. Google Website Clicks Per Loc` = c(36.6, 41.2),
+  char_date = c("September 2021", "October 2021"),
+  date = lubridate::as_date(c("2021-09-01", "2021-10-01"), format = "%Y-%m-%d")
+)
+yext_data$G_PCs <- yext_data$G_PCs %>% 
+  rbind(new_Google_phonecalls_and_websiteclicks)
 
 
 # load data collected online for key comparisons:
@@ -255,7 +276,7 @@ Impressions + Clicks
 # Some Statistics:
 
 ctr <- 
-rcor <- cor(yext_data$Longtail_Imps_and_Clicks$`Avg. Longtail Impressions Per Loc`, yext_data$Longtail_Imps_and_Clicks$`Avg. Longtail Clicks Per Loc`)
+  rcor <- cor(yext_data$Longtail_Imps_and_Clicks$`Avg. Longtail Impressions Per Loc`, yext_data$Longtail_Imps_and_Clicks$`Avg. Longtail Clicks Per Loc`)
 
 ```
 
@@ -426,23 +447,23 @@ Map_Views <- google_maps_and_search_views_all_data %>%
   filter(metric == "map_views") %>%
   ggplot(aes(x = date, y = value, color = source)) +
   geom_line() + 
-  labs(title = "Average Google Maps Views Per Location",
-       # subtitle = "For Longtail Keywords",
+  labs(title = "Average Google Maps Views",
+       subtitle = "Per Location",
        caption = "Geography: U.S.") +
   scale_color_manual(values = c(r_col, "black")) +
   xlab("") +
   ylab("") +
   my_theme() +
   annotate("text", x = lubridate::as_date("2019-10-01"), y = 4000, label = "Legal Services") +
-  annotate("text", x = lubridate::as_date("2020-08-20"), y = 18000, label = "All Industries", color = r_col) +
+  annotate("text", x = lubridate::as_date("2020-10-01"), y = 22000, label = "All Industries", color = r_col) +
   theme(legend.position = "none")
 
 Search_Views <- google_maps_and_search_views_all_data %>% 
   filter(metric == "search_views") %>%
   ggplot(aes(x = date, y = value, color = source)) +
   geom_line() + 
-  labs(title = "Average Google Search Views Per Location",
-       # subtitle = "For Longtail Keywords",
+  labs(title = "Average Google Search Views",
+       subtitle = "Per Location",
        caption = "Geography: U.S.") +
   scale_color_manual(values = c(r_col, "black")) +
   xlab("") +
@@ -454,9 +475,27 @@ Search_Views <- google_maps_and_search_views_all_data %>%
 
 Map_Views + Search_Views
 
+# some basic stats:
+avg_map_views_allindustry = google_maps_and_search_views_all_data %>% 
+  filter(source == "all_verticals", metric == "map_views") %>%
+  .$value %>%
+  mean()
+avg_search_views_allindustry = google_maps_and_search_views_all_data %>% 
+  filter(source == "all_verticals", metric == "search_views") %>%
+  .$value %>%
+  mean()
+avg_map_views_legalservices = google_maps_and_search_views_all_data %>% 
+  filter(source == "legal_services", metric == "map_views") %>%
+  .$value %>%
+  mean()
+avg_search_views_legalservices = google_maps_and_search_views_all_data %>% 
+  filter(source == "legal_services", metric == "search_views") %>%
+  .$value %>%
+  mean()
 
 ```
 
+The trends in the _legal services_ follow the trends of the global average of all industries. With one notable difference, the average of Google Maps Views and Google Search Views per location is much smaller than the global average. The average of Google Maps Views in the _legal services_ is on average only `r round(avg_map_views_legalservices/avg_map_views_allindustry *100, 1)`% of the global average.   
 
 ### Clicks
 
