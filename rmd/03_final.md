@@ -62,49 +62,34 @@ font-size: 18px;
 
 Yext, a company providing _entreprise search_ solutions based on Natural Language Processing and AI, publish anonymized data on their [Search Data Hub](https://www.yext.com/search-data-hub). These data are samples of listing and local page data across a variety of search engines, and other digital endpoints collected by Yext from their clients. They allow for exploring insights on consumer behavior trends — including shifts in search volume and foot traffic trends by industry. 
 
-We have analyzed these data for the industry of the Legal Services. What can we learn from Yext Search Data Hub that is relevant for personal injury lawyers? We present here our key findings.  
+We analyzed these data for the _Legal Services_ industry. What can we learn from Yext Search Data Hub that is relevant for personal injury lawyers? We present here our key findings.  
 
 
 # Methodology
-Yext kindly provided us with a subset of the data from the Search Data Hub: data about _Legal Services_ (subvertical) coming from U.S. companies. We enriched these data with key spot comparisons observed directly on the online [Search Data Hub](https://www.yext.com/search-data-hub).  
+Yext kindly provided us with a subset of the data from the Search Data Hub: data about _Legal Services_ (subvertical) coming from U.S. companies. We enriched these data with some key spot comparisons observed directly on the online [Search Data Hub](https://www.yext.com/search-data-hub).  
 
 ## About the Data
 
-Yext mentions that:  
-"The data is comprised  comprised of a sample of listing and local page data across a variety of search engines, and other digital endpoints. Insights are shown only on a region and industry level where there are sufficient businesses, locations, and search engine data sources to maintain anonymity and privacy for Yext customers and where Yext customers have adopted the platform for a sufficient period of time to provide a meaningful comparison year over year. As data may vary between regions due to, among other things, the sample size or availability of data for certain businesses and subverticals, industry insights may not be comparable across regions."  
+Yext mentions that "the data is comprised  comprised of a sample of listing and local page data across a variety of search engines, and other digital endpoints. Insights are shown only on a region and industry level where there are sufficient businesses, locations, and search engine data sources to maintain anonymity and privacy for Yext customers and where Yext customers have adopted the platform for a sufficient period of time to provide a meaningful comparison year over year. As data may vary between regions due to, among other things, the sample size or availability of data for certain businesses and subverticals, industry insights may not be comparable across regions."   
+The data published by Yext, and presented in this analysis, are better compared over time. However, as the metrics are averages over a sample, we can still compare the absolute values of the _legal services_ to the values of the rest of the industry.  
 
-Sample Size for the "subvertical" of _Legal Services_ in the U.S.: 5409 businesses including 7249 entities.   
-Sample Size for the whole the U.S., all the industries (all subverticals): 5409 businesses including 7249 entities.   
+**Sample sizes:**  
 
+* Sample Size for the "subvertical" of _Legal Services_ in the U.S.: 5,409 businesses including 7,249 entities.   
+* Sample Size for the whole the U.S., all the industries (all subverticals): 73,909 businesses including 545,974 entities.   
 
-[add number of companies for the legal services here .] LISTING SAMPLE SiZE  
-
-* mANUAALLY ADD THE DATA FROM LAST MONTH(S)
-
-## Interpretation
-The data published by Yext, and presented in this analysis, are better compared over time. Trends are more interesting and insightful than absolute values.
-
-## Glossary
-
-* Impressions:
-* Clicks
-* Views
-
-2) Are “listing”, "website URL” and “entity” three words that represent the same thing?  
-_Not quite. An entity would be an actual location, a physician, an ATM. Any real-world object in this case. A listing is what you see in a local pack or a map pack on a search engine. The screenshot below shows three Google listings for Dominos entities (locations in this case). When managed properly each of these location entities has several listings on other search engines like Bing, Yahoo, etc. A website URL would depend on the context but for the sake of this data generally refers to the local page associated with a location. Let me know where you see that phrase and I can elaborate. Screenshots attached to illustrate these last two._
 
 # Research Findings 
 
-
 ## Extended Network Impressions and Clicks
 
-The _impressions_ represent the number of times a sample of listings appeared in search results across Google Maps, Google Search, Bing, Facebook, and the broader network. And the _clicks_, the clicks...
+The _impressions_ represent the number of times a sample of listings appeared in search results across Google Maps, Google Search, Bing, Facebook, and the broader network. And the _clicks_, the number of time they were clicked.  
 
 ![](03_final_files/figure-html/unnamed-chunk-1-1.svg)<!-- -->
 
 There is a sudden increase in the _Average Extended Network Clicks_ since summer 2021.  
 
-Visually, there does not seem to be a large correlation between the _impressions_ and the _clicks_, except for the recent increase. However, the Pearson correlation coefficient is $r = 0.56$. This coefficient oscillate between 0, there is no linear correlation, the clicks have no relations to impressions, and 1, there is a perfect correlation between impressions and clicks. There is some correlation between the number of impressions and the clicks, meaning that the number of clicks is not completely independent from the number of impressions. However, this relation is not perfect and an increase in the number of impressions is not necessarily, directly and completely reflected in the number of clicks.  
+Visually, there does not seem to be a large correlation between the _impressions_ and the _clicks_. This is reflected in the Pearson correlation coefficient, which is $r = 0.21$. This coefficient oscillate between 0, there is no linear correlation, the clicks have no relations to impressions, and 1, there is a perfect correlation between impressions and clicks. There is aa small correlation between the number of impressions and the clicks, meaning that the number of clicks is not completely independent from the number of impressions. However, this relation is very far from being perfect and an increase in the number of impressions is not necessarily, directly and completely reflected in the number of clicks.  
 
 ### Click-Through Rate
 
@@ -112,7 +97,7 @@ As Yext is sharing both impressions and clicks, we can compute the average _Clic
 
 ![](03_final_files/figure-html/unnamed-chunk-2-1.svg)<!-- -->
 
-The average CTR inn _legal services_ for longtail keywords in the extended network (Google Maps, Google Search, Bing, Facebook, and the broader network) is of 2.66%.  
+The average CTR in _legal services_ for longtail keywords in the extended network (Google Maps, Google Search, Bing, Facebook, and the broader network) is of 2.62%.  
 
 ### Industry Comparison
 
@@ -120,9 +105,9 @@ We compare the Extended Network Impressions and Clicks from the _legal services_
 
 ![](03_final_files/figure-html/unnamed-chunk-3-1.svg)<!-- -->
 
-The _Average Extended Network Impressions for Longtail Keywords_ for _all industries together_ is 2.7 times larger than for _legal services_. The gap is even larger for the _Clicks_: it is 8.7 times larger for _all industries together_ than for _legal services_. This suggests that, in this sample, _legal services_ have generally less success in turning impressions into clicks. This is reflected in the CTR, which is on average 8.76%, much higher than the average CTR shown above for the _legal services_: 2.66%.  
+The _Average Extended Network Impressions for Longtail Keywords_ for _all industries together_ is 2.7 times larger than for _legal services_. The gap is even larger for the _Clicks_: it is 9.3 times larger for _all industries together_ than for _legal services_. This suggests that, in this sample, _legal services_ have generally less success in turning impressions into clicks. This is reflected in the CTR. The CTR of all industries together is on average of 8.76%, much higher than the average CTR for the _legal services_: 2.62%.  
 
-When measured on the whole industry, there is a much larger correlation between the impressions and the clicks: the Pearson correlation coefficient is $r = 0.82$.  
+When measured on the whole industry, there is a much larger correlation between the impressions and the clicks: the Pearson correlation coefficient is $r = 0.82$. This means that fluctuations in the impressions are well reflected in the clicks, albeit not perfectly (perfectly would mean r = 1).  
 
 
 
@@ -140,7 +125,9 @@ The _Average Google Maps Views Per Location_ represents number of times the list
 
 The _Average Google Maps Views Per Location_ decreased by 73.6% between February and April 2020, at the beginning of the COVID pandemic, and is slowly recovering.   
 
-The _Average Google Search Views Per Location_ is growing steadily since mid-2020. It has never been so high.  
+The _Average Google Search Views Per Location_ is growing steadily since mid-2020. It has never been so high.   
+
+We note the importance of a presence on Google Maps for companies active in _legal services_ as the average number of maps views is larger than the average number of search views.  
 
 #### Industry Comparison
 
@@ -148,6 +135,7 @@ We compare the Google Maps and Search Views from the _legal services_ to the sam
 
 ![](03_final_files/figure-html/unnamed-chunk-6-1.svg)<!-- -->
 
+The trends in the _legal services_ follow the trends of the global average of all industries very well. With one notable difference, the average of Google Maps Views and Google Search Views per location is much smaller than the global average. The average of Google Maps Views in the _legal services_ is on average only 8.7% of the global average. The average of Google Search Views in the _legal services_ is on average only 14.7% of the global average.   
 
 ### Clicks
 
@@ -165,6 +153,7 @@ The _Average Google Driving Directions Per Location_ represents the number of ti
 
 ### Industry Comparison
 
+![](03_final_files/figure-html/unnamed-chunk-10-1.svg)<!-- -->
 
 
 # Summary and Main Findings

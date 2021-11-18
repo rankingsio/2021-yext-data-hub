@@ -136,8 +136,8 @@ yext_data <- rio::import(here::here("proc_data", "yext_data.rds"))
 new_Longtail_Imps_and_Clicks <- tibble(
   `Month of Date1` = c("September", "October"),
   `Year of Date1` = c(2021, 2021),
-  `Avg. Longtail Clicks Per Loc` = c(5.99, 6.09),
-  `Avg. Longtail Impressions Per Loc` = c(123.9, 127.7),
+  `Avg. Longtail Clicks Per Loc` = c(3.9, 4),
+  `Avg. Longtail Impressions Per Loc` = c(92, 100),
   char_date = c("September 2021", "October 2021"),
   date = lubridate::as_date(c("2021-09-01", "2021-10-01"), format = "%Y-%m-%d")
 )
@@ -195,6 +195,18 @@ google_maps_and_search_views_all_industries <- rio::import(here::here(
 ) %>%
   mutate(date = lubridate::as_date(date, format = "%d.%m.%Y"))
 
+google_diving_directions_all_industries <- rio::import(here::here(
+  "proc_data",
+  "driving_directions(2021-11-17).csv")
+) %>%
+  mutate(date = lubridate::as_date(date, format = "%d.%m.%Y"))
+
+google_phone_and_website_all_industries <- rio::import(here::here(
+  "proc_data",
+  "phone_calls-and_website_clicks (2021-11-17).csv")
+) %>%
+  mutate(date = lubridate::as_date(date, format = "%d.%m.%Y"))
+
 
 ```
 
@@ -204,43 +216,28 @@ google_maps_and_search_views_all_industries <- rio::import(here::here(
 
 Yext, a company providing _entreprise search_ solutions based on Natural Language Processing and AI, publish anonymized data on their [Search Data Hub](https://www.yext.com/search-data-hub). These data are samples of listing and local page data across a variety of search engines, and other digital endpoints collected by Yext from their clients. They allow for exploring insights on consumer behavior trends — including shifts in search volume and foot traffic trends by industry. 
 
-We have analyzed these data for the industry of the Legal Services. What can we learn from Yext Search Data Hub that is relevant for personal injury lawyers? We present here our key findings.  
+We analyzed these data for the _Legal Services_ industry. What can we learn from Yext Search Data Hub that is relevant for personal injury lawyers? We present here our key findings.  
 
 
 # Methodology
-Yext kindly provided us with a subset of the data from the Search Data Hub: data about _Legal Services_ (subvertical) coming from U.S. companies. We enriched these data with key spot comparisons observed directly on the online [Search Data Hub](https://www.yext.com/search-data-hub).  
+Yext kindly provided us with a subset of the data from the Search Data Hub: data about _Legal Services_ (subvertical) coming from U.S. companies. We enriched these data with some key spot comparisons observed directly on the online [Search Data Hub](https://www.yext.com/search-data-hub).  
 
 ## About the Data
 
-Yext mentions that:  
-"The data is comprised  comprised of a sample of listing and local page data across a variety of search engines, and other digital endpoints. Insights are shown only on a region and industry level where there are sufficient businesses, locations, and search engine data sources to maintain anonymity and privacy for Yext customers and where Yext customers have adopted the platform for a sufficient period of time to provide a meaningful comparison year over year. As data may vary between regions due to, among other things, the sample size or availability of data for certain businesses and subverticals, industry insights may not be comparable across regions."  
+Yext mentions that "the data is comprised  comprised of a sample of listing and local page data across a variety of search engines, and other digital endpoints. Insights are shown only on a region and industry level where there are sufficient businesses, locations, and search engine data sources to maintain anonymity and privacy for Yext customers and where Yext customers have adopted the platform for a sufficient period of time to provide a meaningful comparison year over year. As data may vary between regions due to, among other things, the sample size or availability of data for certain businesses and subverticals, industry insights may not be comparable across regions."   
+The data published by Yext, and presented in this analysis, are better compared over time. However, as the metrics are averages over a sample, we can still compare the absolute values of the _legal services_ to the values of the rest of the industry.  
 
-Sample Size for the "subvertical" of _Legal Services_ in the U.S.: 5409 businesses including 7249 entities.   
-Sample Size for the whole the U.S., all the industries (all subverticals): 5409 businesses including 7249 entities.   
+**Sample sizes:**  
 
+* Sample Size for the "subvertical" of _Legal Services_ in the U.S.: 5,409 businesses including 7,249 entities.   
+* Sample Size for the whole the U.S., all the industries (all subverticals): 73,909 businesses including 545,974 entities.   
 
-[add number of companies for the legal services here .] LISTING SAMPLE SiZE  
-
-* mANUAALLY ADD THE DATA FROM LAST MONTH(S)
-
-## Interpretation
-The data published by Yext, and presented in this analysis, are better compared over time. Trends are more interesting and insightful than absolute values.
-
-## Glossary
-
-* Impressions:
-* Clicks
-* Views
-
-2) Are “listing”, "website URL” and “entity” three words that represent the same thing?  
-_Not quite. An entity would be an actual location, a physician, an ATM. Any real-world object in this case. A listing is what you see in a local pack or a map pack on a search engine. The screenshot below shows three Google listings for Dominos entities (locations in this case). When managed properly each of these location entities has several listings on other search engines like Bing, Yahoo, etc. A website URL would depend on the context but for the sake of this data generally refers to the local page associated with a location. Let me know where you see that phrase and I can elaborate. Screenshots attached to illustrate these last two._
 
 # Research Findings 
 
-
 ## Extended Network Impressions and Clicks
 
-The _impressions_ represent the number of times a sample of listings appeared in search results across Google Maps, Google Search, Bing, Facebook, and the broader network. And the _clicks_, the clicks...
+The _impressions_ represent the number of times a sample of listings appeared in search results across Google Maps, Google Search, Bing, Facebook, and the broader network. And the _clicks_, the number of time they were clicked.  
 
 ```{r fig.width=8, fig.height=4}
 
@@ -275,14 +272,13 @@ Impressions + Clicks
 
 # Some Statistics:
 
-ctr <- 
-  rcor <- cor(yext_data$Longtail_Imps_and_Clicks$`Avg. Longtail Impressions Per Loc`, yext_data$Longtail_Imps_and_Clicks$`Avg. Longtail Clicks Per Loc`)
+rcor <- cor(yext_data$Longtail_Imps_and_Clicks$`Avg. Longtail Impressions Per Loc`, yext_data$Longtail_Imps_and_Clicks$`Avg. Longtail Clicks Per Loc`)
 
 ```
 
 There is a sudden increase in the _Average Extended Network Clicks_ since summer 2021.  
 
-Visually, there does not seem to be a large correlation between the _impressions_ and the _clicks_, except for the recent increase. However, the Pearson correlation coefficient is $r = `r round(rcor, 2)`$. This coefficient oscillate between 0, there is no linear correlation, the clicks have no relations to impressions, and 1, there is a perfect correlation between impressions and clicks. There is some correlation between the number of impressions and the clicks, meaning that the number of clicks is not completely independent from the number of impressions. However, this relation is not perfect and an increase in the number of impressions is not necessarily, directly and completely reflected in the number of clicks.  
+Visually, there does not seem to be a large correlation between the _impressions_ and the _clicks_. This is reflected in the Pearson correlation coefficient, which is $r = `r round(rcor, 2)`$. This coefficient oscillate between 0, there is no linear correlation, the clicks have no relations to impressions, and 1, there is a perfect correlation between impressions and clicks. There is aa small correlation between the number of impressions and the clicks, meaning that the number of clicks is not completely independent from the number of impressions. However, this relation is very far from being perfect and an increase in the number of impressions is not necessarily, directly and completely reflected in the number of clicks.  
 
 ### Click-Through Rate
 
@@ -305,7 +301,7 @@ CTR_legalservices = yext_data$Longtail_Imps_and_Clicks %>%
   summarise(mean_ctr = mean(ctr))
 ```
 
-The average CTR inn _legal services_ for longtail keywords in the extended network (Google Maps, Google Search, Bing, Facebook, and the broader network) is of `r round(CTR_legalservices*100, 2)`%.  
+The average CTR in _legal services_ for longtail keywords in the extended network (Google Maps, Google Search, Bing, Facebook, and the broader network) is of `r round(CTR_legalservices*100, 2)`%.  
 
 ### Industry Comparison
 
@@ -383,9 +379,9 @@ CTR_allindustry = Longtail_Imps_and_Clicks_all_data %>%
 
 ```
 
-The _Average Extended Network Impressions for Longtail Keywords_ for _all industries together_ is `r round(avg_impressions_allindustry/avg_impressions_legalservices, 1)` times larger than for _legal services_. The gap is even larger for the _Clicks_: it is `r round(avg_clicks_allindustry/avg_clicks_legalservices, 1)` times larger for _all industries together_ than for _legal services_. This suggests that, in this sample, _legal services_ have generally less success in turning impressions into clicks. This is reflected in the CTR, which is on average `r round(CTR_allindustry*100, 2)`%, much higher than the average CTR shown above for the _legal services_: `r round(CTR_legalservices*100, 2)`%.  
+The _Average Extended Network Impressions for Longtail Keywords_ for _all industries together_ is `r round(avg_impressions_allindustry/avg_impressions_legalservices, 1)` times larger than for _legal services_. The gap is even larger for the _Clicks_: it is `r round(avg_clicks_allindustry/avg_clicks_legalservices, 1)` times larger for _all industries together_ than for _legal services_. This suggests that, in this sample, _legal services_ have generally less success in turning impressions into clicks. This is reflected in the CTR. The CTR of all industries together is on average of `r round(CTR_allindustry*100, 2)`%, much higher than the average CTR for the _legal services_: `r round(CTR_legalservices*100, 2)`%.  
 
-When measured on the whole industry, there is a much larger correlation between the impressions and the clicks: the Pearson correlation coefficient is $r = `r round(rcor_allindustry, 2)`$.  
+When measured on the whole industry, there is a much larger correlation between the impressions and the clicks: the Pearson correlation coefficient is $r = `r round(rcor_allindustry, 2)`$. This means that fluctuations in the impressions are well reflected in the clicks, albeit not perfectly (perfectly would mean r = 1).  
 
 ```{r}
 
@@ -429,7 +425,9 @@ maps + searches
 
 The _Average Google Maps Views Per Location_ decreased by 73.6% between February and April 2020, at the beginning of the COVID pandemic, and is slowly recovering.   
 
-The _Average Google Search Views Per Location_ is growing steadily since mid-2020. It has never been so high.  
+The _Average Google Search Views Per Location_ is growing steadily since mid-2020. It has never been so high.   
+
+We note the importance of a presence on Google Maps for companies active in _legal services_ as the average number of maps views is larger than the average number of search views.  
 
 #### Industry Comparison
 
@@ -495,13 +493,15 @@ avg_search_views_legalservices = google_maps_and_search_views_all_data %>%
 
 ```
 
-The trends in the _legal services_ follow the trends of the global average of all industries. With one notable difference, the average of Google Maps Views and Google Search Views per location is much smaller than the global average. The average of Google Maps Views in the _legal services_ is on average only `r round(avg_map_views_legalservices/avg_map_views_allindustry *100, 1)`% of the global average.   
+The trends in the _legal services_ follow the trends of the global average of all industries very well. With one notable difference, the average of Google Maps Views and Google Search Views per location is much smaller than the global average. The average of Google Maps Views in the _legal services_ is on average only `r round(avg_map_views_legalservices/avg_map_views_allindustry *100, 1)`% of the global average. The average of Google Search Views in the _legal services_ is on average only `r round(avg_search_views_legalservices/avg_search_views_allindustry *100, 1)`% of the global average.   
 
 ### Clicks
 
+#### Google Phone Calls
+
 The _Average Google Phone Calls Per Location_ represents the number of times a user clicked on the phone call link from a Google listing. There was a clear dip of around -30% at the onset of the COVID pandemic. This metric has reached the maximum level again since.    
 
-```{r fig.height=4}
+```{r fig.width=6, fig.height=4}
 
 yext_data$G_PCs %>%
   ggplot(aes(x = date, y = `Avg. Google Phone Calls Per Loc` )) +
@@ -514,9 +514,49 @@ yext_data$G_PCs %>%
 
 ```
 
+##### Industry Comparison
+
+```{r fig.width=6, fig.height=4}
+
+google_phone_and_website_all_data <- yext_data$G_PCs %>%
+  select(date, phone_calls = `Avg. Google Phone Calls Per Loc`, website_clicks = `Avg. Google Website Clicks Per Loc`) %>%
+  mutate(source = "legal_services") %>%
+  rbind(google_phone_and_website_all_industries)
+
+google_driving_all_data <- yext_data$G_DDs %>%
+  select(date, driving_directions = `Avg. Google Driving Directions Per Loc`) %>%
+  mutate(source = "legal_services") %>%
+  rbind(google_diving_directions_all_industries)
+
+google_clicks_all_data <- google_phone_and_website_all_data %>% 
+  left_join(google_driving_all_data) %>%
+  pivot_longer(cols = c(phone_calls, website_clicks, driving_directions), names_to = "metric", values_to = "value")
+
+Phone_Calls <- google_clicks_all_data %>%
+  filter(metric == "phone_calls") %>%
+  ggplot(aes(x = date, y = value, color = source)) +
+  geom_line() + 
+  labs(title = "Average Google Phone Calls",
+       subtitle = "Per Location",
+       caption = "Geography: U.S.") +
+  scale_color_manual(values = c(r_col, "black")) +
+  xlab("") +
+  ylab("") +
+  my_theme() +
+  annotate("text", x = lubridate::as_date("2020-10-01"), y = 50, label = "Legal Services") +
+  annotate("text", x = lubridate::as_date("2019-10-01"), y = 180, label = "All Industries", color = r_col) +
+  theme(legend.position = "none")
+
+
+Phone_Calls
+
+```
+
+#### Google Website Clicks
+
 The _Average Google Website Clicks Per Location_ represents the number of times a consumer clicked through to the corporate domain from a location page. It seems that there was a small dip at the onset of the COVID pandemic, but it is less clear.     
 
-```{r}
+```{r fig.width=6, fig.height=4}
 yext_data$G_PCs %>%
   ggplot(aes(x = date, y = `Avg. Google Website Clicks Per Loc` )) +
   geom_line() +
@@ -527,9 +567,35 @@ yext_data$G_PCs %>%
   my_theme()
 ```
 
+##### Industry Comparison
+
+```{r fig.width=6, fig.height=4}
+Website_Clicks <- google_clicks_all_data %>%
+  filter(metric == "website_clicks") %>%
+  ggplot(aes(x = date, y = value, color = source)) +
+  geom_line() + 
+  labs(title = "Average Google Website Clicks",
+       subtitle = "Per Location",
+       caption = "Geography: U.S.") +
+  scale_color_manual(values = c(r_col, "black")) +
+  xlab("") +
+  ylab("") +
+  my_theme() +
+  annotate("text", x = lubridate::as_date("2020-10-01"), y = 70, label = "Legal Services") +
+  annotate("text", x = lubridate::as_date("2019-11-01"), y = 340, label = "All Industries", color = r_col) +
+  theme(legend.position = "none")
+
+
+
+```
+
+
+
+#### Google Driving Directions
+
 The _Average Google Driving Directions Per Location_ represents the number of times a consumer clicked to get driving directions from the location pages. This metric was clearly affected by the COVID pandemic. It dropped by 80% between February and april 2020. It is slowly recovering, now reaching about 80% of the pre-pandemic level.      
 
-```{r}
+```{r fig.width=6, fig.height=4}
 yext_data$G_DDs %>%
   ggplot(aes(x = date, y = `Avg. Google Driving Directions Per Loc` )) +
   geom_line() +
@@ -540,9 +606,28 @@ yext_data$G_DDs %>%
   my_theme()
 ```
 
-### Industry Comparison
 
 
+##### Industry Comparison
+
+```{r fig.width=6, fig.height=4}
+Driving_Directions <- google_clicks_all_data %>%
+  filter(metric == "driving_directions") %>%
+  ggplot(aes(x = date, y = value, color = source)) +
+  geom_line() + 
+  labs(title = "Average Google Driving Directions",
+       subtitle = "Per Location",
+       caption = "Geography: U.S.") +
+  scale_color_manual(values = c(r_col, "black")) +
+  xlab("") +
+  ylab("") +
+  my_theme() +
+  annotate("text", x = lubridate::as_date("2019-08-01"), y = 60, label = "Legal Services") +
+  annotate("text", x = lubridate::as_date("2020-07-01"), y = 300, label = "All Industries", color = r_col) +
+  theme(legend.position = "none")
+
+Driving_Directions
+```
 
 # Summary and Main Findings
 
