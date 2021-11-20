@@ -1,5 +1,5 @@
 ---
-title: "Yext DataHub"
+title: "Yext Search Data Hub"
 author: |
   | Lead: Chris Dreyer ([rankings.io](https://rankings.io/))
   | Support: François Delavy & Daniel Kupka ([frontpagedata.com](https://frontpagedata.com/))
@@ -53,7 +53,10 @@ font-size: 18px;
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE, fig.showtext = TRUE,
-                      dev = "svg")
+                      dev = "svg",
+                      fig.align = "center",
+                      fig.width = 5,
+                      fig.height = 4)
 knitr::knit_hooks$set(inline = function(x) {
   prettyNum(x, big.mark = ",", small.mark = ",", scientific = F)
 })
@@ -78,10 +81,10 @@ r_col <- "#D21D5C" ## highlight color of rankings.io
 my_theme <- function(){
   theme_minimal() +
     theme(
-      plot.margin = margin(30, 30, 30, 30),
+      plot.margin = margin(10, 10, 10, 10),
       plot.background = element_rect(color = "white",
                                      fill = "white"),
-      plot.title = element_text(size = 1.4 * base_size),
+      plot.title = element_text(size = 1.2 * base_size),
       plot.title.position = "plot",
       plot.subtitle = element_text(size = base_size),
       plot.caption = element_text(color = "grey40",
@@ -90,16 +93,16 @@ my_theme <- function(){
       strip.text = element_text(size =  base_size,
                                 face = "bold"),
       axis.line.x = element_line(color = "black",
-                                 size = .8),
+                                 size = .5),
       axis.line.y = element_line(color = "black",
-                                 size = .8),
+                                 size = .5),
       axis.title.x = element_text(size =  base_size,
                                   face = "bold"),
       axis.title.y = element_text(size = base_size,
                                   face = "bold"),
       axis.text = element_text(size = 0.9 * base_size,
-                               color = "black",
-                               face = "bold"),
+                               color = "black", #face = "bold"
+                               ),
       # axis.ticks = element_blank(),
       axis.ticks = element_line(color = "black"),
       panel.grid.major.x = element_line(size = .4,
@@ -108,9 +111,7 @@ my_theme <- function(){
       panel.grid.major.y = element_line(size = .4,
                                         color = "#eaeaea",
                                         linetype = "solid"),
-      panel.grid.minor.x = element_line(size = .4,
-                                        color = "#eaeaea",
-                                        linetype = "solid"),
+      panel.grid.minor.x = element_blank(), #element_line(size = .4, color = "#eaeaea", linetype = "solid"),
       panel.grid.minor.y = element_blank(),
       panel.spacing.x = unit(2, "lines"),
       panel.spacing.y = unit(1, "lines")
@@ -239,27 +240,30 @@ The data published by Yext, and presented in this analysis, are better compared 
 
 The _impressions_ represent the number of times a sample of listings appeared in search results across Google Maps, Google Search, Bing, Facebook, and the broader network. And the _clicks_, the number of times they were clicked.  
 
-```{r fig.width=8, fig.height=4}
+```{r fig.width=8}
 
 Impressions <- yext_data$Longtail_Imps_and_Clicks %>% 
   ggplot(aes(x = date, y = `Avg. Longtail Impressions Per Loc`)) +
   geom_line() + 
-  labs(title = "Average Extended Network Impressions",
-       subtitle = "For Longtail Keywords",
-       caption = "Industry: Legal Services, Geography: U.S.") +
+  labs(title = "Average Extended Network Impressions\nFor Longtail Keywords",
+       subtitle = "Industry: Legal Services, Geography: U.S.",
+       caption = "") +
   xlab("") +
   ylab("") +
-  my_theme()
+  my_theme() +
+  scale_x_date(date_labels = "%b-%y", date_breaks  ="6 month")
+
 
 Clicks <- yext_data$Longtail_Imps_and_Clicks %>% 
   ggplot(aes(x = date, y = `Avg. Longtail Clicks Per Loc` )) +
   geom_line() + 
-  labs(title = "Average Extended Network Clicks",
-       subtitle = "For Longtail Keywords",
-       caption = "Industry: Legal Services, Geography: U.S.") +
+  labs(title = "Average Extended Network Clicks\nFor Longtail Keywords",
+       subtitle = "Industry: Legal Services, Geography: U.S.",
+       caption = "") +
   xlab("") +
   ylab("") +
-  my_theme()
+  my_theme() +
+  scale_x_date(date_labels = "%b-%y", date_breaks  ="6 month")
 
 
 Impressions + Clicks
@@ -284,17 +288,18 @@ Visually, there does not seem to be a large correlation between the _impressions
 
 As Yext is sharing both impressions and clicks, we can compute the average _Click-Through Rate_ (CTR): $CTR = clicks / impressions$. 
 
-```{r  fig.height=4}
+```{r}
 yext_data$Longtail_Imps_and_Clicks %>% 
   ggplot(aes(x = date, y = `Avg. Longtail Clicks Per Loc`/`Avg. Longtail Impressions Per Loc` )) +
   geom_line() + 
-  labs(title = "Average Extended Network CTR",
-       subtitle = "For Longtail Keywords",
-       caption = "Industry: Legal Services, Geography: U.S.") +
+  labs(title = "Average Extended Network CTR\nFor Longtail Keywords",
+       subtitle = "Industry: Legal Services, Geography: U.S.",
+       caption = "") +
   xlab("") +
   ylab("") +
   scale_y_continuous(labels = scales::label_percent()) +
-  my_theme()
+  my_theme() +
+  scale_x_date(date_labels = "%b-%y", date_breaks  ="6 month")
 
 CTR_legalservices = yext_data$Longtail_Imps_and_Clicks %>% 
   mutate(ctr = `Avg. Longtail Clicks Per Loc`/`Avg. Longtail Impressions Per Loc`) %>%
@@ -319,32 +324,34 @@ Impressions <- Longtail_Imps_and_Clicks_all_data %>%
   filter(metric == "impressions") %>%
   ggplot(aes(x = date, y = value, color = source)) +
   geom_line() + 
-  labs(title = "Average Extended Network Impressions",
-       subtitle = "For Longtail Keywords",
-       caption = "Geography: U.S.") +
+  labs(title = "Average Extended Network Impressions\nFor Longtail Keywords",
+       subtitle = "Geography: U.S.",
+       caption = "") +
   scale_color_manual(values = c(r_col, "black")) +
   xlab("") +
   ylab("") +
   my_theme() +
   annotate("text", x = lubridate::as_date("2019-10-01"), y = 100, label = "Legal Services") +
   annotate("text", x = lubridate::as_date("2020-01-01"), y = 230, label = "All Industries", color = r_col) +
-  theme(legend.position = "none")
+  theme(legend.position = "none") +
+  scale_x_date(date_labels = "%b-%y", date_breaks  ="6 month")
 
 
 Clicks <- Longtail_Imps_and_Clicks_all_data %>% 
   filter(metric == "clicks") %>%
   ggplot(aes(x = date, y = value, color = source)) +
   geom_line() + 
-  labs(title = "Average Extended Network Clicks",
-       subtitle = "For Longtail Keywords",
-       caption = "Geography: U.S.") +
+  labs(title = "Average Extended Network Clicks\nFor Longtail Keywords",
+       subtitle = "Geography: U.S.",
+       caption = "") +
   scale_color_manual(values = c(r_col, "black")) +
   xlab("") +
   ylab("") +
   my_theme()  +
   annotate("text", x = lubridate::as_date("2019-08-01"), y = 3, label = "Legal Services") +
   annotate("text", x = lubridate::as_date("2020-01-01"), y = 22, label = "All Industries", color = r_col) +
-  theme(legend.position = "none")
+  theme(legend.position = "none") +
+  scale_x_date(date_labels = "%b-%y", date_breaks  ="6 month")
 
 
 Impressions + Clicks
@@ -383,11 +390,65 @@ The _Average Extended Network Impressions for Longtail Keywords_ for _all indust
 
 When measured on the whole industry, there is a much larger correlation between the impressions and the clicks: the Pearson correlation coefficient is $r = `r round(rcor_allindustry, 2)`$. This means that fluctuations in the impressions are well reflected in the clicks, albeit not perfectly (perfectly would mean r = 1).  
 
-```{r}
+We can index the values measured for the _legal services_ and the _whole industry_ to the value of 100% on January 2019. By doing so, we can compare their trends more precisely and see if the values for the _legal services_ follow the same fluctuations as the industry.  
 
-# EVENTUALLY ADD HERE CORRELATION BTW INDUSTRY AND LEGAL SERVICES.
+```{r fig.width=8}
+
+Impressions <- Longtail_Imps_and_Clicks_all_data %>% 
+  filter(metric == "impressions") %>%
+  group_by(source) %>%
+  mutate(indexed_value = value/value[which.min(date)]) %>% # indexing to first date by source
+  ggplot(aes(x = date, y = indexed_value, color = source)) +
+  geom_line() + 
+  labs(title = "Average Extended Network Impressions\nFor Longtail Keywords",
+       subtitle = "Geography: U.S., values indexed to Jan. 2019",
+       caption = "") +
+  scale_color_manual(values = c(r_col, "black")) +
+  xlab("") +
+  ylab("") +
+  my_theme() +
+  annotate("text", x = lubridate::as_date("2020-10-10"), y = 0.6, label = "Legal Services") +
+  annotate("text", x = lubridate::as_date("2020-01-01"), y = 1.1, label = "All Industries", color = r_col) +
+  theme(legend.position = "none") +
+  scale_x_date(date_labels = "%b-%y", date_breaks  ="6 month") +
+  scale_y_continuous(labels = scales::percent)
+
+
+Clicks <- Longtail_Imps_and_Clicks_all_data %>% 
+  filter(metric == "clicks") %>%
+  group_by(source) %>%
+  mutate(indexed_value = value/value[which.min(date)]) %>% # indexing to first date by source
+  ggplot(aes(x = date, y = indexed_value, color = source)) +
+  geom_line() + 
+  labs(title = "Average Extended Network Clicks\nFor Longtail Keywords",
+       subtitle = "Geography: U.S., values indexed to Jan. 2019",
+       caption = "") +
+  scale_color_manual(values = c(r_col, "black")) +
+  xlab("") +
+  ylab("") +
+  my_theme()  +
+  annotate("text", x = lubridate::as_date("2019-10-01"), y = 0.8, label = "Legal Services") +
+  annotate("text", x = lubridate::as_date("2020-01-01"), y = 1.5, label = "All Industries", color = r_col) +
+  theme(legend.position = "none") +
+  scale_x_date(date_labels = "%b-%y", date_breaks  ="6 month") +
+  scale_y_continuous(labels = scales::percent)
+
+
+Impressions + Clicks
+
+rcor_legalVSindustry_impressions <- cor(
+  Longtail_Imps_and_Clicks_all_data %>% filter(source == "legal_services", metric == "impressions") %>% .$value, 
+  Longtail_Imps_and_Clicks_all_data %>% filter(source == "all_verticals", metric == "impressions") %>% .$value)
+rcor_legalVSindustry_clicks <- cor(
+  Longtail_Imps_and_Clicks_all_data %>% filter(source == "legal_services", metric == "clicks") %>% .$value, 
+  Longtail_Imps_and_Clicks_all_data %>% filter(source == "all_verticals", metric == "clicks") %>% .$value)
 
 ```
+
+We can see that the _Clicks_ in the _legal services_ seem to follow the general trends well. This is reflected in the Pearson correlation coefficient: $r = `r round(rcor_legalVSindustry_clicks, 2)`$. However, this is does not seem to be the case for the _Impressions_. The _Impressions_ in the _legal services_ do not follow the general trends well visually and there is no correlation: $r = `r round(rcor_legalVSindustry_impressions, 2)`$.   
+
+
+
 
 
 ## Google My Business
@@ -398,25 +459,27 @@ This chapter focuses on the Google ecosystem.
 
 The _Average Google Maps Views Per Location_ represents the number of times the listing was viewed on a Google Map. The _Average Google Search Views Per Location_ represents the number of times the listing was viewed on Google Search. Google Map Views and Google Search Views together represent the total number of impressions listings receive across the Google ecosystem.
 
-```{r, fig.align='center', fig.width=10, fig.height=4}
+```{r, fig.width=8}
 
 maps <- yext_data$G_MVs %>% 
   ggplot(aes(x = date, y = `Avg. Google Maps Views Per Loc` )) +
   geom_line() +
   labs(title = "Average Google Maps Views Per Location",
-       caption = "Industry: Legal Services, Geography: U.S.") +
+       subtitle = "Industry: Legal Services, Geography: U.S.") +
   xlab("") +
   ylab("") +
-  my_theme()
+  my_theme() +
+  scale_x_date(date_labels = "%b-%y", date_breaks  ="6 month")
 
 searches <- yext_data$G_MVs %>% 
   ggplot(aes(x = date, y = `Avg. Google Search Views Per Loc` )) +
   geom_line() + 
   labs(title = "Average Google Search Views Per Location",
-       caption = "Industry: Legal Services, Geography: U.S.") +
+       subtitle = "Industry: Legal Services, Geography: U.S.") +
   xlab("") +
   ylab("") +
-  my_theme()
+  my_theme() +
+  scale_x_date(date_labels = "%b-%y", date_breaks  ="6 month")
 
 maps + searches
 
@@ -433,7 +496,7 @@ We note the importance of a presence on Google Maps for companies active in _leg
 
 We compare the Google Maps and Search Views from the _legal services_ to the same metrics for _all the industries_. By doing so, we compare the performance of listings in the _legal services_ to the global average.   
 
-```{r fig.width=8}
+```{r fig.width=10}
 
 google_maps_and_search_views_all_data <- yext_data$G_MVs %>%
   select(date, map_views = `Avg. Google Maps Views Per Loc`, search_views = `Avg. Google Search Views Per Loc`) %>%
@@ -501,7 +564,7 @@ The trends in the _legal services_ follow the trends of the global average of al
 
 The _Average Google Phone Calls Per Location_ represents the number of times a user clicked on the phone call link from a Google listing. There was a clear dip of around -30% at the onset of the COVID pandemic. This metric has reached the maximum level again since.    
 
-```{r fig.width=6, fig.height=4}
+```{r }
 
 yext_data$G_PCs %>%
   ggplot(aes(x = date, y = `Avg. Google Phone Calls Per Loc` )) +
@@ -516,7 +579,7 @@ yext_data$G_PCs %>%
 
 ##### Industry Comparison
 
-```{r fig.width=6, fig.height=4}
+```{r }
 
 google_phone_and_website_all_data <- yext_data$G_PCs %>%
   select(date, phone_calls = `Avg. Google Phone Calls Per Loc`, website_clicks = `Avg. Google Website Clicks Per Loc`) %>%
@@ -565,7 +628,7 @@ On the contrary to the _legal services_, we do not see a gap at the onset of the
 
 The _Average Google Website Clicks Per Location_ represents the number of times a consumer clicked through to the corporate domain from a location page. It seems that there was a small dip at the onset of the COVID pandemic, but it is less clear.     
 
-```{r fig.width=6, fig.height=4}
+```{r }
 yext_data$G_PCs %>%
   ggplot(aes(x = date, y = `Avg. Google Website Clicks Per Loc` )) +
   geom_line() +
@@ -578,7 +641,7 @@ yext_data$G_PCs %>%
 
 ##### Industry Comparison
 
-```{r fig.width=6, fig.height=4}
+```{r }
 
 Website_Clicks <- google_clicks_all_data %>%
   filter(metric == "website_clicks") %>%
@@ -614,7 +677,7 @@ The _Average Google Website Clicks Per Location_ for the _legal services_ is flu
 
 The _Average Google Driving Directions Per Location_ represents the number of times a consumer clicked to get driving directions from the location pages. This metric was clearly affected by the COVID pandemic. It dropped by 80% between February and April 2020. It is slowly recovering, now reaching about 80% of the pre-pandemic level.      
 
-```{r fig.width=6, fig.height=4}
+```{r }
 yext_data$G_DDs %>%
   ggplot(aes(x = date, y = `Avg. Google Driving Directions Per Loc` )) +
   geom_line() +
@@ -629,7 +692,7 @@ yext_data$G_DDs %>%
 
 ##### Industry Comparison
 
-```{r fig.width=6, fig.height=4}
+```{r }
 Driving_Directions <- google_clicks_all_data %>%
   filter(metric == "driving_directions") %>%
   ggplot(aes(x = date, y = value, color = source)) +
