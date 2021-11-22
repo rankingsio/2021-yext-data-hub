@@ -61,7 +61,7 @@ knitr::knit_hooks$set(inline = function(x) {
   prettyNum(x, big.mark = ",", small.mark = ",", scientific = F)
 })
 
-required_packages <- c("tidyverse", "here", "patchwork") #, "colorspace", "pdftools", "kableExtra", "ggrepel", "ggiraph", "lubridate", "htmlwidgets")
+required_packages <- c("tidyverse", "here", "patchwork", "ggtext") #, "colorspace", "pdftools", "kableExtra", "ggrepel", "ggiraph", "lubridate", "htmlwidgets")
 
 for(i in required_packages) { 
   if(!require(i, character.only = T)) {
@@ -102,7 +102,7 @@ my_theme <- function(){
                                   face = "bold"),
       axis.text = element_text(size = 0.9 * base_size,
                                color = "black", #face = "bold"
-                               ),
+      ),
       # axis.ticks = element_blank(),
       axis.ticks = element_line(color = "black"),
       panel.grid.major.x = element_line(size = .4,
@@ -386,9 +386,48 @@ CTR_allindustry = Longtail_Imps_and_Clicks_all_data %>%
 
 ```
 
+When measured on the whole industry, there is a much larger correlation between the impressions and the clicks: the Pearson correlation coefficient is $r = `r round(rcor_allindustry, 2)`$. This means that fluctuations in the impressions are well reflected in the clicks, albeit not perfectly (perfectly would mean r = 1).   
+
 The _Average Extended Network Impressions for Longtail Keywords_ for _all industries together_ is `r round(avg_impressions_allindustry/avg_impressions_legalservices, 1)` times larger than for _legal services_. The gap is even larger for the _Clicks_: it is `r round(avg_clicks_allindustry/avg_clicks_legalservices, 1)` times larger for _all industries together_ than for _legal services_. This suggests that, in this sample, _legal services_ have generally less success in turning impressions into clicks. This is reflected in the CTR. The CTR of all industries together is on average of `r round(CTR_allindustry*100, 2)`%, much higher than the average CTR for the _legal services_: `r round(CTR_legalservices*100, 2)`%.  
 
-When measured on the whole industry, there is a much larger correlation between the impressions and the clicks: the Pearson correlation coefficient is $r = `r round(rcor_allindustry, 2)`$. This means that fluctuations in the impressions are well reflected in the clicks, albeit not perfectly (perfectly would mean r = 1).  
+```{r fig.width=7}
+
+# comparison of CTR for legal services to industry average.
+CTR_data_for_plot <- Longtail_Imps_and_Clicks_all_data %>% 
+  pivot_wider(names_from = "metric", values_from = "value") %>% 
+  mutate(CTR = clicks/impressions)
+
+CTR_data_for_plot %>% 
+  ggplot(aes(x = date, y = CTR, color = source )) +
+  geom_line() + 
+  labs(title = "Average Extended Network CTR For Longtail Keywords",
+       subtitle = "Geography: U.S.",
+       caption = "Data: Yext, Presentation: Rankings.io") +
+  xlab("") +
+  ylab("") +
+  scale_y_continuous(labels = scales::label_percent()) +
+  my_theme() +
+  theme(legend.position = "none") +
+  scale_x_date(date_labels = "%b-%y", date_breaks  ="6 month") +
+  scale_color_manual(values = c(r_col, "black")) +
+  geom_hline(yintercept = 0.0876, color = r_col, size = 0.8, linetype = "dashed") +
+  geom_hline(yintercept = 0.0262, color = "black", size = 0.8, linetype = "dashed") +
+  annotate(geom = "richtext", 
+           label = "The CTR of the <span style='color: #D21D5C';'>global average of all industries</span> (8.8%) <br>
+           is <b>more than 3 times</b> <br>
+           than the average CTR of the <span style='color: black;'>legal services</span> (2.6%).",
+           color = "grey40",
+           size = 3,
+           x = lubridate::ymd(20200401), 
+           y = 0.05,
+           label.size = NA) +
+  annotate("segment", x = lubridate::ymd(20190501), xend = lubridate::ymd(20190501), y = 0.0262, yend = 0.0876, 
+           colour = "grey40", size=0.8, arrow=arrow(ends = "both", length = unit(3, "mm")))
+
+
+# CTR_data_for_plot %>% group_by(source) %>% summarise(mean_CTR = mean(CTR))
+
+```
 
 We can index the values measured for the _legal services_ and the _whole industry_ to the value of 100% on January 2019. By doing so, we can compare their trends more precisely and see if the values for the _legal services_ follow the same fluctuations as the industry.  
 
@@ -472,11 +511,11 @@ maps <- yext_data$G_MVs %>%
   scale_x_date(date_labels = "%b-%y", date_breaks  ="6 month") +
   geom_vline(xintercept = lubridate::ymd(20200313), color = "grey80", size = 0.8, linetype = "dashed") +
   geom_label(aes(x = lubridate::ymd(20201101), y = 2300, label = "COVID-19 declared\nnational emergency"),
-            nudge_x = 0, size = 3.5, color = "grey80", label.size = 0) +
+             nudge_x = 0, size = 3.5, color = "grey80", label.size = 0) +
   annotate("segment", x = lubridate::ymd(20200110), xend = lubridate::ymd(20200310), y = 2113, yend = 558, 
            colour = r_col, size=0.8, arrow=arrow(length = unit(3, "mm"))) +
   geom_label(aes(x = lubridate::ymd(20200310), y = 1600, label = "-75% btw. Feb.\nand April 2020"),
-            nudge_x = 170, size = 3.5, color = r_col, label.size = 0)
+             nudge_x = 170, size = 3.5, color = r_col, label.size = 0)
 
 searches <- yext_data$G_MVs %>% 
   ggplot(aes(x = date, y = `Avg. Google Search Views Per Loc` )) +
@@ -489,9 +528,9 @@ searches <- yext_data$G_MVs %>%
   scale_x_date(date_labels = "%b-%y", date_breaks  ="6 month") +
   geom_vline(xintercept = lubridate::ymd(20200313), color = "grey80", size = 0.8, linetype = "dashed") +
   geom_label(aes(x = lubridate::ymd(20201101), y = 1700, label = "COVID-19 declared\nnational emergency"),
-            nudge_x = 0, size = 3.5, color = "grey80", label.size = 0) +
+             nudge_x = 0, size = 3.5, color = "grey80", label.size = 0) +
   geom_label(aes(x = lubridate::ymd(20200610), y = 1400, label = "+40% btw. June 2020\nand Oct. 2021"),
-            nudge_x = 0, size = 3.5, color = r_col, label.size = 0) +
+             nudge_x = 0, size = 3.5, color = r_col, label.size = 0) +
   annotate("segment", x = lubridate::ymd(20200601), xend = lubridate::ymd(20211001), y = 1164, yend = 1596, 
            colour = r_col, size=0.8, arrow=arrow(length = unit(3, "mm")))
 
