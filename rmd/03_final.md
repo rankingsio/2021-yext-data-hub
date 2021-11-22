@@ -3,7 +3,7 @@ title: "Yext Search Data Hub"
 author: |
   | Lead: Chris Dreyer ([rankings.io](https://rankings.io/))
   | Support: François Delavy & Daniel Kupka ([frontpagedata.com](https://frontpagedata.com/))
-date: "Last updated on 2021-11-19"
+date: "Last updated on 2021-11-21"
 output:
   html_document:
     theme: paper

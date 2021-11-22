@@ -469,7 +469,14 @@ maps <- yext_data$G_MVs %>%
   xlab("") +
   ylab("") +
   my_theme() +
-  scale_x_date(date_labels = "%b-%y", date_breaks  ="6 month")
+  scale_x_date(date_labels = "%b-%y", date_breaks  ="6 month") +
+  geom_vline(xintercept = lubridate::ymd(20200313), color = "grey80", size = 0.8, linetype = "dashed") +
+  geom_label(aes(x = lubridate::ymd(20201101), y = 2300, label = "COVID-19 declared\nnational emergency"),
+            nudge_x = 0, size = 3.5, color = "grey80", label.size = 0) +
+  annotate("segment", x = lubridate::ymd(20200110), xend = lubridate::ymd(20200310), y = 2113, yend = 558, 
+           colour = r_col, size=0.8, arrow=arrow(length = unit(3, "mm"))) +
+  geom_label(aes(x = lubridate::ymd(20200310), y = 1600, label = "-75% btw. Feb.\nand April 2020"),
+            nudge_x = 170, size = 3.5, color = r_col, label.size = 0)
 
 searches <- yext_data$G_MVs %>% 
   ggplot(aes(x = date, y = `Avg. Google Search Views Per Loc` )) +
@@ -479,7 +486,14 @@ searches <- yext_data$G_MVs %>%
   xlab("") +
   ylab("") +
   my_theme() +
-  scale_x_date(date_labels = "%b-%y", date_breaks  ="6 month")
+  scale_x_date(date_labels = "%b-%y", date_breaks  ="6 month") +
+  geom_vline(xintercept = lubridate::ymd(20200313), color = "grey80", size = 0.8, linetype = "dashed") +
+  geom_label(aes(x = lubridate::ymd(20201101), y = 1700, label = "COVID-19 declared\nnational emergency"),
+            nudge_x = 0, size = 3.5, color = "grey80", label.size = 0) +
+  geom_label(aes(x = lubridate::ymd(20200610), y = 1400, label = "+40% btw. June 2020\nand Oct. 2021"),
+            nudge_x = 0, size = 3.5, color = r_col, label.size = 0) +
+  annotate("segment", x = lubridate::ymd(20200601), xend = lubridate::ymd(20211001), y = 1164, yend = 1596, 
+           colour = r_col, size=0.8, arrow=arrow(length = unit(3, "mm")))
 
 maps + searches
 
