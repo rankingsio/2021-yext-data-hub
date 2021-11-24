@@ -390,7 +390,7 @@ When measured on the whole industry, there is a much larger correlation between 
 
 The _Average Extended Network Impressions for Longtail Keywords_ for _all industries together_ is `r round(avg_impressions_allindustry/avg_impressions_legalservices, 1)` times larger than for _legal services_. The gap is even larger for the _Clicks_: it is `r round(avg_clicks_allindustry/avg_clicks_legalservices, 1)` times larger for _all industries together_ than for _legal services_. This suggests that, in this sample, _legal services_ have generally less success in turning impressions into clicks. This is reflected in the CTR. The CTR of all industries together is on average of `r round(CTR_allindustry*100, 2)`%, much higher than the average CTR for the _legal services_: `r round(CTR_legalservices*100, 2)`%.  
 
-```{r fig.width=7}
+```{r CTR_comparison, fig.width=7}
 
 # comparison of CTR for legal services to industry average.
 CTR_data_for_plot <- Longtail_Imps_and_Clicks_all_data %>% 
@@ -404,7 +404,7 @@ CTR_data_for_plot %>%
        subtitle = "Geography: U.S.",
        caption = "Data: Yext, Presentation: Rankings.io") +
   xlab("") +
-  ylab("") +
+  ylab("CTR") +
   scale_y_continuous(labels = scales::label_percent()) +
   my_theme() +
   theme(legend.position = "none") +
@@ -413,12 +413,12 @@ CTR_data_for_plot %>%
   geom_hline(yintercept = 0.0876, color = r_col, size = 0.8, linetype = "dashed") +
   geom_hline(yintercept = 0.0262, color = "black", size = 0.8, linetype = "dashed") +
   annotate(geom = "richtext", 
-           label = "The CTR of the <span style='color: #D21D5C';'>global average of all industries</span> (8.8%) <br>
-           is <b>more than 3 times</b> <br>
-           than the average CTR of the <span style='color: black;'>legal services</span> (2.6%).",
+           label = "The CTR of the <b><span style='color: #D21D5C';'>global average of all industries</span></b> (8.8%) <br>
+           is more than <b>3 times larger</b><br>
+           than the average CTR of the <b><span style='color: black;'>legal services</span></b> (2.6%).",
            color = "grey40",
-           size = 3,
-           x = lubridate::ymd(20200401), 
+           size = 3.8,
+           x = lubridate::ymd(20200501), 
            y = 0.05,
            label.size = NA) +
   annotate("segment", x = lubridate::ymd(20190501), xend = lubridate::ymd(20190501), y = 0.0262, yend = 0.0876, 
@@ -484,10 +484,7 @@ rcor_legalVSindustry_clicks <- cor(
 
 ```
 
-We can see that the _Clicks_ in the _legal services_ seem to follow the general trends well. This is reflected in the Pearson correlation coefficient: $r = `r round(rcor_legalVSindustry_clicks, 2)`$. However, this is does not seem to be the case for the _Impressions_. The _Impressions_ in the _legal services_ do not follow the general trends well visually and there is no correlation: $r = `r round(rcor_legalVSindustry_impressions, 2)`$.   
-
-
-
+We can see that the _Clicks_ in the _legal services_ seem to follow the general trends well. This is reflected in the Pearson correlation coefficient: $r = `r round(rcor_legalVSindustry_clicks, 2)`$. However, this is does not seem to be the case for the _Impressions_. The _Impressions_ in the _legal services_ do not follow the general trends well visually and there is no correlation: $r = `r round(rcor_legalVSindustry_impressions, 2)`$. Could this be because the impressions do not depend from the general presence or behavior of users whereas the clicks do?   
 
 
 ## Google My Business
@@ -549,45 +546,14 @@ We note the importance of a presence on Google Maps for companies active in _leg
 
 We compare the Google Maps and Search Views from the _legal services_ to the same metrics for _all the industries_. By doing so, we compare the performance of listings in the _legal services_ to the global average.   
 
-```{r fig.width=10}
+```{r Google_Mapsandsearch_Views, fig.width=8, fig.height=4.5}
 
+# the data: 
 google_maps_and_search_views_all_data <- yext_data$G_MVs %>%
   select(date, map_views = `Avg. Google Maps Views Per Loc`, search_views = `Avg. Google Search Views Per Loc`) %>%
   mutate(source = "legal_services") %>%
   rbind(google_maps_and_search_views_all_industries) %>%
   pivot_longer(cols = c(map_views, search_views), names_to = "metric", values_to = "value")
-
-Map_Views <- google_maps_and_search_views_all_data %>% 
-  filter(metric == "map_views") %>%
-  ggplot(aes(x = date, y = value, color = source)) +
-  geom_line() + 
-  labs(title = "Average Google Maps Views",
-       subtitle = "Per Location",
-       caption = "Geography: U.S.") +
-  scale_color_manual(values = c(r_col, "black")) +
-  xlab("") +
-  ylab("") +
-  my_theme() +
-  annotate("text", x = lubridate::as_date("2019-10-01"), y = 4000, label = "Legal Services") +
-  annotate("text", x = lubridate::as_date("2020-10-01"), y = 22000, label = "All Industries", color = r_col) +
-  theme(legend.position = "none")
-
-Search_Views <- google_maps_and_search_views_all_data %>% 
-  filter(metric == "search_views") %>%
-  ggplot(aes(x = date, y = value, color = source)) +
-  geom_line() + 
-  labs(title = "Average Google Search Views",
-       subtitle = "Per Location",
-       caption = "Geography: U.S.") +
-  scale_color_manual(values = c(r_col, "black")) +
-  xlab("") +
-  ylab("") +
-  my_theme() +
-  annotate("text", x = lubridate::as_date("2019-10-01"), y = 2000, label = "Legal Services") +
-  annotate("text", x = lubridate::as_date("2019-09-01"), y = 7400, label = "All Industries", color = r_col) +
-  theme(legend.position = "none")
-
-Map_Views + Search_Views
 
 # some basic stats:
 avg_map_views_allindustry = google_maps_and_search_views_all_data %>% 
@@ -607,9 +573,73 @@ avg_search_views_legalservices = google_maps_and_search_views_all_data %>%
   .$value %>%
   mean()
 
+
+# the plots:
+Map_Views <- google_maps_and_search_views_all_data %>% 
+  filter(metric == "map_views") %>%
+  ggplot(aes(x = date, y = value, color = source)) +
+  geom_line() + 
+  labs(title = "Average Google Maps Views\nPer Location",
+       subtitle = "Geography: U.S.",
+       caption = "") +
+  scale_color_manual(values = c(r_col, "black")) +
+  xlab("") +
+  ylab("Views (log scale)") +
+  my_theme() +
+  annotate("text", x = lubridate::as_date("2019-08-01"), y = 3000, label = "Legal Services") +
+  annotate("text", x = lubridate::as_date("2020-09-01"), y = 22000, label = "All Industries", color = r_col) +
+  theme(legend.position = "none") + 
+  scale_y_log10() +
+  scale_x_date(date_labels = "%b-%y", date_breaks  ="6 month") +
+  geom_hline(yintercept = avg_map_views_allindustry, color = r_col, size = 0.8, linetype = "dashed") +
+  geom_hline(yintercept = avg_map_views_legalservices, color = "black", size = 0.8, linetype = "dashed") +
+  annotate("segment", x = lubridate::ymd(20200801), xend = lubridate::ymd(20200801), 
+           y = avg_map_views_legalservices, yend = avg_map_views_allindustry, 
+           colour = "grey40", size=0.8, arrow=arrow(ends = "last", length = unit(3, "mm")))  +
+  annotate(geom = "richtext", 
+           label = "<b>x11</b>",
+           color = "grey40",
+           size = 4,
+           x = lubridate::ymd(20201101), 
+           y = 4000,
+           label.size = NA) 
+
+Search_Views <- google_maps_and_search_views_all_data %>% 
+  filter(metric == "search_views") %>%
+  ggplot(aes(x = date, y = value, color = source)) +
+  geom_line() + 
+  labs(title = "Average Google Search Views\nPer Location",
+       subtitle = "Geography: U.S.",
+       caption = "Data: Yext, Presentation: Rankings.io") +
+  scale_color_manual(values = c(r_col, "black")) +
+  xlab("") +
+  ylab("Views (log scale)") +
+  my_theme() +
+  annotate("text", x = lubridate::as_date("2019-10-01"), y = 1300, label = "Legal Services") +
+  annotate("text", x = lubridate::as_date("2019-09-01"), y = 9000, label = "All Industries", color = r_col) +
+  theme(legend.position = "none") + 
+  scale_y_log10() + 
+  scale_x_date(date_labels = "%b-%y", date_breaks  ="6 month") +
+  geom_hline(yintercept = avg_search_views_allindustry, color = r_col, size = 0.8, linetype = "dashed") +
+  geom_hline(yintercept = avg_search_views_legalservices, color = "black", size = 0.8, linetype = "dashed")  +
+  annotate("segment", x = lubridate::ymd(20200801), xend = lubridate::ymd(20200801), 
+           y = avg_search_views_legalservices, yend = avg_search_views_allindustry, 
+           colour = "grey40", size=0.8, arrow=arrow(ends = "last", length = unit(3, "mm"))) +
+  annotate(geom = "richtext", 
+           label = "<b>x7</b>",
+           color = "grey40",
+           size = 4,
+           x = lubridate::ymd(20201101), 
+           y = 3000,
+           label.size = NA) 
+
+Map_Views + Search_Views
+
+
+
 ```
 
-The trends in the _legal services_ follow the trends of the global average of all industries very well. With one notable difference, the average of Google Maps Views and Google Search Views per location is much smaller than the global average. The average of Google Maps Views in the _legal services_ is on average only `r round(avg_map_views_legalservices/avg_map_views_allindustry *100, 1)`% of the global average. The average of Google Search Views in the _legal services_ is on average only `r round(avg_search_views_legalservices/avg_search_views_allindustry *100, 1)`% of the global average.   
+The trends in the _legal services_ follow the trends of the global average of all industries very well. With one notable difference, the average of Google Maps Views and Google Search Views per location is much smaller than the global average. The average of Google Maps Views in the _legal services_ is on average only `r round(avg_map_views_legalservices/avg_map_views_allindustry *100, 1)`% of the global average. The average of Google Search Views in the _legal services_ is on average only `r round(avg_search_views_legalservices/avg_search_views_allindustry *100, 1)`% of the global average. Note the logarithmic scale on the y-axis. It is used because it allows for a better comparison of the trends despite the difference in magnitude.  
 
 ### Clicks
 
