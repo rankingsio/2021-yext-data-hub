@@ -805,6 +805,102 @@ avg_driving_directions_legal <- google_clicks_all_data %>%
 
 The _Average Google Driving Directions Per Location_ for the _legal services_ is behaving similarly to the average of all industries. The recovery after the onset of the pandemic is similar, albeit a bit slower. This might reflect the fact that _legal services_ can more easily managed remotely than other industries. The _Average Google Driving Directions Per Location_ for the _legal services_ is only `r round(avg_driving_directions_legal/avg_driving_directions_all*100,1)`% of the global average.  
 
+
+
+#### Industry Comparison
+
+```{r fig.width=9}
+
+google_phone_and_website_all_data <- yext_data$G_PCs %>%
+  select(date, phone_calls = `Avg. Google Phone Calls Per Loc`, website_clicks = `Avg. Google Website Clicks Per Loc`) %>%
+  mutate(source = "legal_services") %>%
+  rbind(google_phone_and_website_all_industries)
+
+google_driving_all_data <- yext_data$G_DDs %>%
+  select(date, driving_directions = `Avg. Google Driving Directions Per Loc`) %>%
+  mutate(source = "legal_services") %>%
+  rbind(google_diving_directions_all_industries)
+
+google_clicks_all_data <- google_phone_and_website_all_data %>% 
+  left_join(google_driving_all_data) %>%
+  pivot_longer(cols = c(phone_calls, website_clicks, driving_directions), names_to = "metric", values_to = "value")
+
+Phone_Calls <- google_clicks_all_data %>%
+  filter(metric == "phone_calls") %>%
+  ggplot(aes(x = date, y = value, color = source)) +
+  geom_line() + 
+  labs(title = "Average Google Phone Calls",
+       subtitle = "Per Location",
+       caption = "Geography: U.S.") +
+  scale_color_manual(values = c(r_col, "black")) +
+  xlab("") +
+  ylab("(log scale)") +
+  my_theme() +
+  annotate("text", x = lubridate::as_date("2020-10-01"), y = 50, label = "Legal Services") +
+  annotate("text", x = lubridate::as_date("2019-10-01"), y = 180, label = "All Industries", color = r_col) +
+  theme(legend.position = "none", plot.margin = margin(5, 5, 5, 5)) +  
+  scale_y_log10() 
+
+
+Website_Clicks <- google_clicks_all_data %>%
+  filter(metric == "website_clicks") %>%
+  ggplot(aes(x = date, y = value, color = source)) +
+  geom_line() + 
+  labs(title = "Average Google Website Clicks",
+       subtitle = "Per Location",
+       caption = "Geography: U.S.") +
+  scale_color_manual(values = c(r_col, "black")) +
+  xlab("") +
+  ylab("") +
+  my_theme() +
+  annotate("text", x = lubridate::as_date("2020-10-01"), y = 70, label = "Legal Services") +
+  annotate("text", x = lubridate::as_date("2019-11-01"), y = 340, label = "All Industries", color = r_col) +
+  theme(legend.position = "none", plot.margin = margin(5, 5, 5, 5)) +  
+  scale_y_log10() 
+
+Driving_Directions <- google_clicks_all_data %>%
+  filter(metric == "driving_directions") %>%
+  ggplot(aes(x = date, y = value, color = source)) +
+  geom_line() + 
+  labs(title = "Average Google Driving Directions",
+       subtitle = "Per Location",
+       caption = "Data: Yext, Presentation: Rankings.io") +
+  scale_color_manual(values = c(r_col, "black")) +
+  xlab("") +
+  ylab("") +
+  my_theme() +
+  annotate("text", x = lubridate::as_date("2019-08-01"), y = 60, label = "Legal Services") +
+  annotate("text", x = lubridate::as_date("2020-07-01"), y = 300, label = "All Industries", color = r_col) +
+  theme(legend.position = "none", plot.margin = margin(5, 5, 5, 5)) +  
+  scale_y_log10()
+
+
+Phone_Calls + Website_Clicks + Driving_Directions
+
+
+
+# some basic stats:
+avg_phone_call_all <- google_clicks_all_data %>%
+  filter(metric == "phone_calls", source == "all_verticals") %>%
+  summarise(avg = mean(value))
+avg_phone_call_legal <- google_clicks_all_data %>%
+  filter(metric == "phone_calls", source == "legal_services") %>%
+  summarise(avg = mean(value))
+avg_website_clicks_all <- google_clicks_all_data %>%
+  filter(metric == "website_clicks", source == "all_verticals") %>%
+  summarise(avg = mean(value))
+avg_website_clicks_legal <- google_clicks_all_data %>%
+  filter(metric == "website_clicks", source == "legal_services") %>%
+  summarise(avg = mean(value))
+avg_driving_directions_all <- google_clicks_all_data %>%
+  filter(metric == "driving_directions", source == "all_verticals") %>%
+  summarise(avg = mean(value))
+avg_driving_directions_legal <- google_clicks_all_data %>%
+  filter(metric == "driving_directions", source == "legal_services") %>%
+  summarise(avg = mean(value))
+
+```
+
 # Summary and Main Findings
 
 ## The Impact of COVID

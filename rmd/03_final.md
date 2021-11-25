@@ -184,6 +184,12 @@ The _Average Google Driving Directions Per Location_ represents the number of ti
 
 The _Average Google Driving Directions Per Location_ for the _legal services_ is behaving similarly to the average of all industries. The recovery after the onset of the pandemic is similar, albeit a bit slower. This might reflect the fact that _legal services_ can more easily managed remotely than other industries. The _Average Google Driving Directions Per Location_ for the _legal services_ is only 7% of the global average.  
 
+
+
+#### Industry Comparison
+
+<img src="03_final_files/figure-html/unnamed-chunk-12-1.svg" style="display: block; margin: auto;" />
+
 # Summary and Main Findings
 
 ## The Impact of COVID
