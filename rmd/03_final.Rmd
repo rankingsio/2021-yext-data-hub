@@ -670,8 +670,12 @@ yext_data$G_PCs %>%
   my_theme() +
   scale_x_date(date_labels = "%b-%y", date_breaks  ="6 month") +
   geom_vline(xintercept = lubridate::ymd(20200313), color = "grey80", size = 0.8, linetype = "dashed") +
-  geom_label(aes(x = lubridate::ymd(20201001), y = 32, label = "COVID-19 declared\nnational emergency"),
-             nudge_x = 0, size = 3.5, color = "grey80", label.size = 0) 
+  geom_label(aes(x = lubridate::ymd(20200901), y = 31.5, label = "COVID-19 declared\nnational emergency"),
+             nudge_x = 0, size = 3.5, color = "grey80", label.size = 0)  +
+  annotate("segment", x = lubridate::ymd(20200110), xend = lubridate::ymd(20200310), y = 28.31770, yend = 18.93106, 
+           colour = r_col, size=0.8, arrow=arrow(length = unit(3, "mm"))) +
+  geom_label(aes(x = lubridate::ymd(20190901), y = 22, label = "-30% btw. Feb.\nand April 2020"),
+             nudge_x = 0, size = 3.5, color = r_col, label.size = 0)
 
 ```
 
@@ -688,7 +692,11 @@ yext_data$G_PCs %>%
        caption = "Industry: Legal Services, Geography: U.S.") +
   xlab("") +
   ylab("") +
-  my_theme()
+  my_theme() +
+  scale_x_date(date_labels = "%b-%y", date_breaks  ="6 month") +
+  geom_vline(xintercept = lubridate::ymd(20200313), color = "grey80", size = 0.8, linetype = "dashed") +
+  geom_label(aes(x = lubridate::ymd(20200901), y = 41.5, label = "COVID-19 declared\nnational emergency"),
+             nudge_x = 0, size = 3.5, color = "grey80", label.size = 0) 
 ```
 
 
@@ -697,14 +705,22 @@ yext_data$G_PCs %>%
 The _Average Google Driving Directions Per Location_ represents the number of times a consumer clicked to get driving directions from the location pages. This metric was clearly affected by the COVID pandemic. It dropped by 80% between February and April 2020. It is slowly recovering, now reaching about 80% of the pre-pandemic level.      
 
 ```{r }
-yext_data$G_DDs %>%
+yext_data$G_DDs %>% 
   ggplot(aes(x = date, y = `Avg. Google Driving Directions Per Loc` )) +
   geom_line() +
   labs(title = "Average Google Driving Directions Per Location",
        caption = "Industry: Legal Services, Geography: U.S.") +
   xlab("") +
   ylab("") +
-  my_theme()
+  my_theme() +
+  scale_x_date(date_labels = "%b-%y", date_breaks  ="6 month") +
+  geom_vline(xintercept = lubridate::ymd(20200313), color = "grey80", size = 0.8, linetype = "dashed") +
+  geom_label(aes(x = lubridate::ymd(20200901), y = 25, label = "COVID-19 declared\nnational emergency"),
+             nudge_x = 0, size = 3.5, color = "grey80", label.size = 0) +
+  annotate("segment", x = lubridate::ymd(20200110), xend = lubridate::ymd(20200310), y = 24.510778, yend = 4.505001, 
+           colour = r_col, size=0.8, arrow=arrow(length = unit(3, "mm"))) +
+  geom_label(aes(x = lubridate::ymd(20190901), y = 11, label = "-80% btw. Feb.\nand April 2020"),
+             nudge_x = 0, size = 3.5, color = r_col, label.size = 0)
 ```
 
 
@@ -875,11 +891,13 @@ The _Average Google Driving Directions Per Location_ for the _legal services_ is
 
 The COVID did not have an impact on all metrics shared by Yext. But it had a clear impact on Google Maps Views and Google Driving Directions; they dropped significantly (-75% and -80%). They almost reached their pre-pandemic level again, probably illustrating a near-total recovery of in-person business for legal services.   
 
-Did COVID have a lasting effect on some metrics? Google Search Views are increasing constantly since mid-2020. Regardless of if this effect is due to an increased online presence of clients due to COVID, it is a good time to optimize Google Search Clicks and take advantage of this fact.
+Did COVID have a lasting effect on some metrics? Google Search Views are increasing constantly since mid-2020. Regardless of if this effect is due to an increased online presence of clients due to COVID, it is a good time to optimize Google Search Clicks and take advantage of this fact. 
 
 ## Legal Services Perform Worse Than the Average
 
 On all metrics provided by Yext, legal services performed only 10% to 30% of the industry's average value. So there is room for growth. 
+
+"that underperformance could simply be due to the fact that legal services is not as in-demand as all industries on the whole. After all, how often do people actually need legal services?" 
 
 | Metric        | Percentage of Industry Average  |
 | :------------ |:-------------| 
