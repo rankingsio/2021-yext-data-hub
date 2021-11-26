@@ -3,7 +3,7 @@ title: "Yext Search Data Hub"
 author: |
   | Lead: Chris Dreyer ([rankings.io](https://rankings.io/))
   | Support: François Delavy & Daniel Kupka ([frontpagedata.com](https://frontpagedata.com/))
-date: "Last updated on 2021-11-24"
+date: "Last updated on 2021-11-26"
 output:
   html_document:
     theme: paper
@@ -151,44 +151,31 @@ The _Average Google Phone Calls Per Location_ represents the number of times a u
 
 <img src="03_final_files/figure-html/unnamed-chunk-6-1.svg" style="display: block; margin: auto;" />
 
-##### Industry Comparison
-
-<img src="03_final_files/figure-html/unnamed-chunk-7-1.svg" style="display: block; margin: auto;" />
-
-On the contrary to the _legal services_, we do not see a gap at the onset of the COVID pandemic for the average of all industries. The _Average Google Phone Calls Per Location_ for the _legal services_ is only 16.6% of the global average.  
 
 #### Google Website Clicks
 
 The _Average Google Website Clicks Per Location_ represents the number of times a consumer clicked through to the corporate domain from a location page. It seems that there was a small dip at the onset of the COVID pandemic, but it is less clear.     
 
-<img src="03_final_files/figure-html/unnamed-chunk-8-1.svg" style="display: block; margin: auto;" />
-
-##### Industry Comparison
-
-<img src="03_final_files/figure-html/unnamed-chunk-9-1.svg" style="display: block; margin: auto;" />
-
-The _Average Google Website Clicks Per Location_ for the _legal services_ is fluctuating similarly to the average of all industries. The _Average Google Website Clicks Per Location_ for the _legal services_ is only 10.9% of the global average.  
+<img src="03_final_files/figure-html/unnamed-chunk-7-1.svg" style="display: block; margin: auto;" />
 
 
 #### Google Driving Directions
 
 The _Average Google Driving Directions Per Location_ represents the number of times a consumer clicked to get driving directions from the location pages. This metric was clearly affected by the COVID pandemic. It dropped by 80% between February and April 2020. It is slowly recovering, now reaching about 80% of the pre-pandemic level.      
 
-<img src="03_final_files/figure-html/unnamed-chunk-10-1.svg" style="display: block; margin: auto;" />
-
-
-
-##### Industry Comparison
-
-<img src="03_final_files/figure-html/unnamed-chunk-11-1.svg" style="display: block; margin: auto;" />
-
-The _Average Google Driving Directions Per Location_ for the _legal services_ is behaving similarly to the average of all industries. The recovery after the onset of the pandemic is similar, albeit a bit slower. This might reflect the fact that _legal services_ can more easily managed remotely than other industries. The _Average Google Driving Directions Per Location_ for the _legal services_ is only 7% of the global average.  
+<img src="03_final_files/figure-html/unnamed-chunk-8-1.svg" style="display: block; margin: auto;" />
 
 
 
 #### Industry Comparison
 
-<img src="03_final_files/figure-html/unnamed-chunk-12-1.svg" style="display: block; margin: auto;" />
+<img src="03_final_files/figure-html/Google_Clicks-1.svg" style="display: block; margin: auto;" />
+
+On the contrary to the _legal services_, we do not see a gap at the onset of the COVID pandemic for the average of all industries. The _Average Google Phone Calls Per Location_ for the _legal services_ is only 16.6% of the global average.   
+
+The _Average Google Website Clicks Per Location_ for the _legal services_ is fluctuating similarly to the average of all industries. The _Average Google Website Clicks Per Location_ for the _legal services_ is only 10.9% of the global average.    
+
+The _Average Google Driving Directions Per Location_ for the _legal services_ is behaving similarly to the average of all industries. The recovery after the onset of the pandemic is similar, albeit a bit slower. This might reflect the fact that _legal services_ can more easily be managed remotely than other industries. The _Average Google Driving Directions Per Location_ for the _legal services_ is only 7% of the global average.  
 
 # Summary and Main Findings
 
