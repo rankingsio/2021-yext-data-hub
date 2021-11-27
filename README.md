@@ -5,7 +5,8 @@ Repo for the analysis for the Yext Search Data Hub for rankings.io.
 :pencil: The full data report can be found [here](https://frontpagedata.com/2021-yext-data-hub).  
 :hammer: The study was conducted with the statistical programming language [R](https://www.r-project.org/) and made extensive use of the [Tidyverse](https://www.tidyverse.org/).  
 :bar_chart: [The code for the analysis and plots](https://github.com/frontpagedata/yext-data-hub/blob/master/rmd/03_final.Rmd).   
-:page_facing_up: The data can be found [here](https://github.com/frontpagedata/yext-data-hub/tree/master/proc_data).  
+:page_facing_up: The data can be found [here](https://github.com/frontpagedata/yext-data-hub/tree/master/proc_data).    
+
  
 **:sparkles: Contributors:**  
 * François Delavy and Daniel Kupka (all [frontpagedata.com](https://frontpagedata.com/))
