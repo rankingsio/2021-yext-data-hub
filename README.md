@@ -1,6 +1,15 @@
 # Yext Search Data Hub
 
-Repo for the analysis for the Yext Search Data Hub for rankings.io. The analysis is published [here](https://frontpagedata.com/2021-yext-data-hub).
+Repo for the analysis for the Yext Search Data Hub for rankings.io.   
+
+:pencil: The full data report can be found [here](https://frontpagedata.com/2021-yext-data-hub).  
+:hammer: The study was conducted with the statistical programming language [R](https://www.r-project.org/) and made extensive use of the [Tidyverse](https://www.tidyverse.org/).  
+:bar_chart: [The code for the analysis and plots](https://github.com/frontpagedata/yext-data-hub/blob/master/rmd/03_final.Rmd).   
+:page_facing_up: The data can be found [here](https://github.com/frontpagedata/yext-data-hub/tree/master/proc_data).  
+ 
+**:sparkles: Contributors:**  
+* François Delavy and Daniel Kupka (all [frontpagedata.com](https://frontpagedata.com/))
+* Chris Dreyer ([Rankings.io](https://rankings.io/))
 
 ## About
 Yext, a company providing _entreprise search_ solutions based on Natural Language Processing and AI, publish anonymized data on their [Search Data Hub](https://www.yext.com/search-data-hub). These data are samples of listing and local page data across a variety of search engines, and other digital endpoints collected by Yext from their clients. They allow for exploring insights on consumer behavior trends — including shifts in search volume and foot traffic trends by industry.  
@@ -28,4 +37,3 @@ We analyzed these data for the _Legal Services_ industry. What can we learn from
     +-- README.md             <- You're reading it
     +--.gitgnore              <- gitignore
 
-------------------------------------------------------------------------
