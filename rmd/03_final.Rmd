@@ -53,7 +53,9 @@ font-size: 18px;
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE, fig.showtext = TRUE,
-                      dev = "svg",
+                      # dev = "svg",
+                      dpi = 720,
+                      # fig.retina = 2,
                       fig.align = "center",
                       fig.width = 5,
                       fig.height = 4)
@@ -288,7 +290,8 @@ Visually, there does not seem to be a large correlation between the _impressions
 
 As Yext is sharing both impressions and clicks, we can compute the average _Click-Through Rate_ (CTR): $CTR = clicks / impressions$. 
 
-```{r}
+```{r , out.width="500px"}
+
 yext_data$Longtail_Imps_and_Clicks %>% 
   ggplot(aes(x = date, y = `Avg. Longtail Clicks Per Loc`/`Avg. Longtail Impressions Per Loc` )) +
   geom_line() + 
@@ -390,7 +393,7 @@ When measured on the whole industry, there is a much larger correlation between 
 
 The _Average Extended Network Impressions for Longtail Keywords_ for _all industries together_ is `r round(avg_impressions_allindustry/avg_impressions_legalservices, 1)` times larger than for _legal services_. The gap is even larger for the _Clicks_: it is `r round(avg_clicks_allindustry/avg_clicks_legalservices, 1)` times larger for _all industries together_ than for _legal services_. This suggests that, in this sample, _legal services_ have generally less success in turning impressions into clicks. This is reflected in the CTR. The CTR of all industries together is on average of `r round(CTR_allindustry*100, 2)`%, much higher than the average CTR for the _legal services_: `r round(CTR_legalservices*100, 2)`%.  
 
-```{r CTR_comparison, fig.width=7}
+```{r CTR_comparison, fig.width=7, out.width="700px"}
 
 # comparison of CTR for legal services to industry average.
 CTR_data_for_plot <- Longtail_Imps_and_Clicks_all_data %>% 
@@ -652,13 +655,67 @@ Map_Views + Search_Views
 
 The trends in the _legal services_ follow the trends of the global average of all industries very well. With one notable difference, the average of Google Maps Views and Google Search Views per location is much smaller than the global average. The average of Google Maps Views in the _legal services_ is on average only `r round(avg_map_views_legalservices/avg_map_views_allindustry *100, 1)`% of the global average. The average of Google Search Views in the _legal services_ is on average only `r round(avg_search_views_legalservices/avg_search_views_allindustry *100, 1)`% of the global average. Note the logarithmic scale on the y-axis. It is used because it allows for a better comparison of the trends despite the difference in magnitude.  
 
+```{r, fig.width=8, fig.height=4.5, include=FALSE}
+
+Map_Views <- google_maps_and_search_views_all_data %>% 
+  filter(metric == "map_views") %>% 
+  group_by(source) %>%
+  mutate(indexed_value = value/value[which.min(date)]) %>% # indexing to first date by source
+  ggplot(aes(x = date, y = indexed_value, color = source)) +
+  geom_line() + 
+  labs(title = "Average Google Maps Views\nPer Location",
+       subtitle = "Geography: U.S., values indexed to Jan. 2019",
+       caption = "") +
+  scale_color_manual(values = c(r_col, "black")) +
+  xlab("") +
+  ylab("") +
+  my_theme() +
+  annotate("text", x = lubridate::as_date("2019-08-01"), y = 0.45, label = "Legal Services") +
+  annotate("text", x = lubridate::as_date("2020-09-01"), y = 1.6, label = "All Industries", color = r_col) +
+  theme(legend.position = "none") + 
+  scale_x_date(date_labels = "%b-%y", date_breaks  ="6 month") +
+  scale_y_continuous(labels = scales::percent)
+
+Search_Views <- google_maps_and_search_views_all_data %>% 
+  filter(metric == "search_views") %>%
+  group_by(source) %>%
+  mutate(indexed_value = value/value[which.min(date)]) %>% # indexing to first date by source
+  ggplot(aes(x = date, y = indexed_value, color = source)) +
+  geom_line() + 
+  labs(title = "Average Google Search Views\nPer Location",
+       subtitle = "Geography: U.S., values indexed to Jan. 2019",
+       caption = "Data: Yext, Presentation: Rankings.io") +
+  scale_color_manual(values = c(r_col, "black")) +
+  xlab("") +
+  ylab("") +
+  my_theme() +
+  annotate("text", x = lubridate::as_date("2019-10-01"), y = 0.8, label = "Legal Services") +
+  annotate("text", x = lubridate::as_date("2019-09-01"), y = 1.2, label = "All Industries", color = r_col) +
+  theme(legend.position = "none") + 
+  scale_x_date(date_labels = "%b-%y", date_breaks  ="6 month") +
+  scale_y_continuous(labels = scales::percent)
+
+Map_Views + Search_Views
+
+
+# correlations:  
+rcor_legalVSindustry_maps <- cor(
+  google_maps_and_search_views_all_data %>% filter(source == "legal_services", metric == "map_views") %>% .$value, 
+  google_maps_and_search_views_all_data %>% filter(source == "all_verticals", metric == "map_views") %>% .$value)
+rcor_legalVSindustry_search <- cor(
+  google_maps_and_search_views_all_data %>% filter(source == "legal_services", metric == "search_views") %>% .$value, 
+  google_maps_and_search_views_all_data %>% filter(source == "all_verticals", metric == "search_views") %>% .$value)
+
+```
+
+
 ### Clicks
 
 #### Google Phone Calls
 
 The _Average Google Phone Calls Per Location_ represents the number of times a user clicked on the phone call link from a Google listing. There was a clear dip of around -30% at the onset of the COVID pandemic. This metric has reached the maximum level again since.    
 
-```{r }
+```{r , out.width="500px"}
 
 yext_data$G_PCs %>%
   ggplot(aes(x = date, y = `Avg. Google Phone Calls Per Loc` )) +
@@ -684,7 +741,7 @@ yext_data$G_PCs %>%
 
 The _Average Google Website Clicks Per Location_ represents the number of times a consumer clicked through to the corporate domain from a location page. It seems that there was a small dip at the onset of the COVID pandemic, but it is less clear.     
 
-```{r }
+```{r , out.width="500px"}
 yext_data$G_PCs %>%
   ggplot(aes(x = date, y = `Avg. Google Website Clicks Per Loc` )) +
   geom_line() +
@@ -704,7 +761,7 @@ yext_data$G_PCs %>%
 
 The _Average Google Driving Directions Per Location_ represents the number of times a consumer clicked to get driving directions from the location pages. This metric was clearly affected by the COVID pandemic. It dropped by 80% between February and April 2020. It is slowly recovering, now reaching about 80% of the pre-pandemic level.      
 
-```{r }
+```{r , out.width="500px"}
 yext_data$G_DDs %>% 
   ggplot(aes(x = date, y = `Avg. Google Driving Directions Per Loc` )) +
   geom_line() +
@@ -800,7 +857,7 @@ Phone_Calls <- google_clicks_all_data %>%
            x = lubridate::ymd(20210101), 
            y = 75,
            label.size = NA) 
-  
+
 
 Website_Clicks <- google_clicks_all_data %>%
   filter(metric == "website_clicks") %>%
@@ -895,11 +952,9 @@ Did COVID have a lasting effect on some metrics? Google Search Views are increas
 
 ## Legal Services Perform Worse Than the Average
 
-On all metrics provided by Yext, legal services performed only 10% to 30% of the industry's average value. So there is room for growth. 
+On all metrics provided by Yext, legal services performed only 10% to 30% of the industry's average value. For instance, the number of impressions for longtail keywords for the legal services are only 37% of the same metric for the average of all industries.   
 
-"that underperformance could simply be due to the fact that legal services is not as in-demand as all industries on the whole. After all, how often do people actually need legal services?" 
-
-| Metric        | Percentage of Industry Average  |
+| Metric      | Percentage of Industry Average  |
 | :------------ |:-------------| 
 | Average Extended Network Impressions for Longtail Keywords     | 37% | 
 | Average Extended Network Clicks for Longtail Keywords    | 10.8%      |  
@@ -909,6 +964,8 @@ On all metrics provided by Yext, legal services performed only 10% to 30% of the
 | Average Google Phone Calls Per Location | 16.6%      | 
 | Average Google Website Clicks Per Location | 10.9%      | 
 | Average Google Driving Directions Per Location  | 7%      | 
+
+This "underperformance" could simply be due to the fact that legal services is not as in-demand as the average of all industries. Still, CTR, for instance, is not directly demand dependant. It seems that legal services have the possiblity to improve their longtail keyword CTR.   
 
 ## Imperfect Correlation Between Impressions and Clicks
 

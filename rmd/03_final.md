@@ -85,7 +85,7 @@ The data published by Yext, and presented in this analysis, are better compared 
 
 The _impressions_ represent the number of times a sample of listings appeared in search results across Google Maps, Google Search, Bing, Facebook, and the broader network. And the _clicks_, the number of times they were clicked.  
 
-<img src="03_final_files/figure-html/unnamed-chunk-1-1.svg" style="display: block; margin: auto;" />
+<img src="03_final_files/figure-html/unnamed-chunk-1-1.png" style="display: block; margin: auto;" />
 
 There is a sudden increase in the _Average Extended Network Clicks_ since summer 2021.  
 
@@ -95,7 +95,7 @@ Visually, there does not seem to be a large correlation between the _impressions
 
 As Yext is sharing both impressions and clicks, we can compute the average _Click-Through Rate_ (CTR): $CTR = clicks / impressions$. 
 
-<img src="03_final_files/figure-html/unnamed-chunk-2-1.svg" style="display: block; margin: auto;" />
+<img src="03_final_files/figure-html/unnamed-chunk-2-1.png" width="500px" style="display: block; margin: auto;" />
 
 The average CTR in _legal services_ for longtail keywords in the extended network (Google Maps, Google Search, Bing, Facebook, and the broader network) is of 2.62%.  
 
@@ -103,17 +103,17 @@ The average CTR in _legal services_ for longtail keywords in the extended networ
 
 We compare the Extended Network Impressions and Clicks from the _legal services_ to the same metrics for _all the industries_. By doing so, we compare the performance of listings in the _legal services_ to the global average.  
 
-<img src="03_final_files/figure-html/unnamed-chunk-3-1.svg" style="display: block; margin: auto;" />
+<img src="03_final_files/figure-html/unnamed-chunk-3-1.png" style="display: block; margin: auto;" />
 
 When measured on the whole industry, there is a much larger correlation between the impressions and the clicks: the Pearson correlation coefficient is $r = 0.82$. This means that fluctuations in the impressions are well reflected in the clicks, albeit not perfectly (perfectly would mean r = 1).   
 
 The _Average Extended Network Impressions for Longtail Keywords_ for _all industries together_ is 2.7 times larger than for _legal services_. The gap is even larger for the _Clicks_: it is 9.3 times larger for _all industries together_ than for _legal services_. This suggests that, in this sample, _legal services_ have generally less success in turning impressions into clicks. This is reflected in the CTR. The CTR of all industries together is on average of 8.76%, much higher than the average CTR for the _legal services_: 2.62%.  
 
-<img src="03_final_files/figure-html/CTR_comparison-1.svg" style="display: block; margin: auto;" />
+<img src="03_final_files/figure-html/CTR_comparison-1.png" width="700px" style="display: block; margin: auto;" />
 
 We can index the values measured for the _legal services_ and the _whole industry_ to the value of 100% on January 2019. By doing so, we can compare their trends more precisely and see if the values for the _legal services_ follow the same fluctuations as the industry.  
 
-<img src="03_final_files/figure-html/unnamed-chunk-4-1.svg" style="display: block; margin: auto;" />
+<img src="03_final_files/figure-html/unnamed-chunk-4-1.png" style="display: block; margin: auto;" />
 
 We can see that the _Clicks_ in the _legal services_ seem to follow the general trends well. This is reflected in the Pearson correlation coefficient: $r = 0.57$. However, this is does not seem to be the case for the _Impressions_. The _Impressions_ in the _legal services_ do not follow the general trends well visually and there is no correlation: $r = 0$. Could this be because the impressions do not depend from the general presence or behavior of users whereas the clicks do?   
 
@@ -126,7 +126,7 @@ This chapter focuses on the Google ecosystem.
 
 The _Average Google Maps Views Per Location_ represents the number of times the listing was viewed on a Google Map. The _Average Google Search Views Per Location_ represents the number of times the listing was viewed on Google Search. Google Map Views and Google Search Views together represent the total number of impressions listings receive across the Google ecosystem.
 
-<img src="03_final_files/figure-html/unnamed-chunk-5-1.svg" style="display: block; margin: auto;" />
+<img src="03_final_files/figure-html/unnamed-chunk-5-1.png" style="display: block; margin: auto;" />
 
 
 The _Average Google Maps Views Per Location_ decreased by 73.6% between February and April 2020, at the beginning of the COVID pandemic, and is slowly recovering.   
@@ -139,9 +139,12 @@ We note the importance of a presence on Google Maps for companies active in _leg
 
 We compare the Google Maps and Search Views from the _legal services_ to the same metrics for _all the industries_. By doing so, we compare the performance of listings in the _legal services_ to the global average.   
 
-<img src="03_final_files/figure-html/Google_Mapsandsearch_Views-1.svg" style="display: block; margin: auto;" />
+<img src="03_final_files/figure-html/Google_Mapsandsearch_Views-1.png" style="display: block; margin: auto;" />
 
 The trends in the _legal services_ follow the trends of the global average of all industries very well. With one notable difference, the average of Google Maps Views and Google Search Views per location is much smaller than the global average. The average of Google Maps Views in the _legal services_ is on average only 8.7% of the global average. The average of Google Search Views in the _legal services_ is on average only 14.7% of the global average. Note the logarithmic scale on the y-axis. It is used because it allows for a better comparison of the trends despite the difference in magnitude.  
+
+
+
 
 ### Clicks
 
@@ -149,27 +152,27 @@ The trends in the _legal services_ follow the trends of the global average of al
 
 The _Average Google Phone Calls Per Location_ represents the number of times a user clicked on the phone call link from a Google listing. There was a clear dip of around -30% at the onset of the COVID pandemic. This metric has reached the maximum level again since.    
 
-<img src="03_final_files/figure-html/unnamed-chunk-6-1.svg" style="display: block; margin: auto;" />
+<img src="03_final_files/figure-html/unnamed-chunk-7-1.png" width="500px" style="display: block; margin: auto;" />
 
 
 #### Google Website Clicks
 
 The _Average Google Website Clicks Per Location_ represents the number of times a consumer clicked through to the corporate domain from a location page. It seems that there was a small dip at the onset of the COVID pandemic, but it is less clear.     
 
-<img src="03_final_files/figure-html/unnamed-chunk-7-1.svg" style="display: block; margin: auto;" />
+<img src="03_final_files/figure-html/unnamed-chunk-8-1.png" width="500px" style="display: block; margin: auto;" />
 
 
 #### Google Driving Directions
 
 The _Average Google Driving Directions Per Location_ represents the number of times a consumer clicked to get driving directions from the location pages. This metric was clearly affected by the COVID pandemic. It dropped by 80% between February and April 2020. It is slowly recovering, now reaching about 80% of the pre-pandemic level.      
 
-<img src="03_final_files/figure-html/unnamed-chunk-8-1.svg" style="display: block; margin: auto;" />
+<img src="03_final_files/figure-html/unnamed-chunk-9-1.png" width="500px" style="display: block; margin: auto;" />
 
 
 
 #### Industry Comparison
 
-<img src="03_final_files/figure-html/Google_Clicks-1.svg" style="display: block; margin: auto;" />
+<img src="03_final_files/figure-html/Google_Clicks-1.png" style="display: block; margin: auto;" />
 
 On the contrary to the _legal services_, we do not see a gap at the onset of the COVID pandemic for the average of all industries. The _Average Google Phone Calls Per Location_ for the _legal services_ is only 16.6% of the global average.   
 
@@ -183,13 +186,13 @@ The _Average Google Driving Directions Per Location_ for the _legal services_ is
 
 The COVID did not have an impact on all metrics shared by Yext. But it had a clear impact on Google Maps Views and Google Driving Directions; they dropped significantly (-75% and -80%). They almost reached their pre-pandemic level again, probably illustrating a near-total recovery of in-person business for legal services.   
 
-Did COVID have a lasting effect on some metrics? Google Search Views are increasing constantly since mid-2020. Regardless of if this effect is due to an increased online presence of clients due to COVID, it is a good time to optimize Google Search Clicks and take advantage of this fact.
+Did COVID have a lasting effect on some metrics? Google Search Views are increasing constantly since mid-2020. Regardless of if this effect is due to an increased online presence of clients due to COVID, it is a good time to optimize Google Search Clicks and take advantage of this fact. 
 
 ## Legal Services Perform Worse Than the Average
 
-On all metrics provided by Yext, legal services performed only 10% to 30% of the industry's average value. So there is room for growth. 
+On all metrics provided by Yext, legal services performed only 10% to 30% of the industry's average value. For instance, the number of impressions for longtail keywords for the legal services are only 37% of the same metric for the average of all industries.   
 
-| Metric        | Percentage of Industry Average  |
+| Metric      | Percentage of Industry Average  |
 | :------------ |:-------------| 
 | Average Extended Network Impressions for Longtail Keywords     | 37% | 
 | Average Extended Network Clicks for Longtail Keywords    | 10.8%      |  
@@ -199,6 +202,8 @@ On all metrics provided by Yext, legal services performed only 10% to 30% of the
 | Average Google Phone Calls Per Location | 16.6%      | 
 | Average Google Website Clicks Per Location | 10.9%      | 
 | Average Google Driving Directions Per Location  | 7%      | 
+
+This "underperformance" could simply be due to the fact that legal services is not as in-demand as the average of all industries. Still, CTR, for instance, is not directly demand dependant. It seems that legal services have the possiblity to improve their longtail keyword CTR.   
 
 ## Imperfect Correlation Between Impressions and Clicks
 
