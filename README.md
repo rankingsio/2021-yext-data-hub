@@ -19,10 +19,12 @@ We analyzed these data for the _Legal Services_ industry. What can we learn from
         +-- 01_read.Rmd       <- Set up script to read in raw data and do basic cleaning   
         +-- 02_analysis.Rmd   <- Exploration
         +-- 03_final.Rmd      <- FINAL REPORT
-    \-- scripts               <- scripts folder for everything else. 
+        \-- sdsf
+            +-- 03_final      <- All the figures as PNG or SVG 
+    \-- scripts               <- 
         +-- render_upload.R   <- uploading final HTML file to website
-    +-- doc                   <- Documentation 
-    +-- study_name.Rproj
+    +-- doc                   <- Documentation (none)
+    +-- yext-data-hub.Rproj
     +-- README.md             <- You're reading it
     +--.gitgnore              <- gitignore
 
