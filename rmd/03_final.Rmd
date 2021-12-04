@@ -240,7 +240,7 @@ The data published by Yext and presented in this analysis are best compared over
 
 ## Extended Network Impressions and Clicks
 
-_Impressions_ represent the number of times a sample of listings appeared in search results across Google Maps, Google Search, Bing, Facebook, and the broader network, and clicks is the number of times they were clicked.    
+_Impressions_ represent the number of times a sample of listings appeared in search results across Google Maps, Google Search, Bing, Facebook, and the broader network, and _clicks_ are the number of times they were clicked.    
 
 ```{r fig.width=8}
 
@@ -282,7 +282,7 @@ rcor <- cor(yext_data$Longtail_Imps_and_Clicks$`Avg. Longtail Impressions Per Lo
 
 ```
 
-There was a sudden increase in the _average Extended network clicks_ since summer 2021.  
+There was a sudden increase in the _average extended network clicks_ since summer 2021.  
 
 Visually, there does not seem to be a strong positive correlation between _impressions_ and _clicks._ This is reflected in the Pearson correlation coefficient, which is $r = `r round(rcor, 2)`$. This coefficient ranges from 0, indicating that there is no linear correlation between clicks and impressions, to 1, indicating that there is a perfect correlation between impressions and clicks. There is a small correlation between the number of impressions and clicks, meaning that clicks is not completely independent of impressions. However, this relation is very far from being perfect and an increase in impressions is not necessarily, directly, and completely reflected in the number of clicks.  
 
@@ -721,7 +721,7 @@ yext_data$G_PCs %>%
   ggplot(aes(x = date, y = `Avg. Google Phone Calls Per Loc` )) +
   geom_line() +
   labs(title = "Average Google Phone Calls Per Location",
-       caption = "Industry: Legal Services, Geography: U.S.") +
+       subtitle = "Industry: Legal Services, Geography: U.S.") +
   xlab("") +
   ylab("") +
   my_theme() +
@@ -746,7 +746,7 @@ yext_data$G_PCs %>%
   ggplot(aes(x = date, y = `Avg. Google Website Clicks Per Loc` )) +
   geom_line() +
   labs(title = "Average Google Website Clicks Per Location",
-       caption = "Industry: Legal Services, Geography: U.S.") +
+       subtitle = "Industry: Legal Services, Geography: U.S.") +
   xlab("") +
   ylab("") +
   my_theme() +
@@ -766,7 +766,7 @@ yext_data$G_DDs %>%
   ggplot(aes(x = date, y = `Avg. Google Driving Directions Per Loc` )) +
   geom_line() +
   labs(title = "Average Google Driving Directions Per Location",
-       caption = "Industry: Legal Services, Geography: U.S.") +
+       subtitle = "Industry: Legal Services, Geography: U.S.") +
   xlab("") +
   ylab("") +
   my_theme() +
@@ -947,13 +947,13 @@ The _Average Google Driving Directions Per Location_ for the _legal services_ se
 
 ## The Impact of COVID
 
-The COVID did not have an impact on all metrics shared by Yext. But it had a clear impact on Google Maps Views and Google Driving Directions; they dropped significantly (-75% and -80%). They almost reached their pre-pandemic level again, probably illustrating a near-total recovery of in-person business for legal services.   
+COVID did not have an impact on all metrics shared by Yext, but it had a clear impact on Google Maps views and Google Driving Directions; they dropped significantly (by -75% and -80%, respectively). They almost reached their pre-pandemic level again, probably illustrating a near-total recovery of in-person business for legal services.     
 
-Did COVID have a lasting effect on some metrics? Google Search Views are increasing constantly since mid-2020. Regardless of if this effect is due to an increased online presence of clients due to COVID, it is a good time to optimize Google Search Clicks and take advantage of this fact. 
+Did COVID have a lasting effect on some metrics? Google Search views have been constantly increasing since mid-2020. Regardless of whether this effect is due to the increased online presence of users due to COVID, it is a good time to optimize Google Search Clicks and take advantage of this fact.   
 
 ## Legal Services Perform Worse Than the Average
 
-On all metrics provided by Yext, legal services performed only 10% to 30% of the industry's average value. For instance, the number of impressions for longtail keywords for the legal services are only 37% of the same metric for the average of all industries.   
+Among all the metrics provided by Yext, legal services only performed at 10 to 30% of the industry’s average. For instance, the number of impressions for longtail keywords for legal services is only 37% of that of the same metric for the average of all industries.     
 
 | Metric      | Percentage of Industry Average  |
 | :------------ |:-------------| 
@@ -966,14 +966,13 @@ On all metrics provided by Yext, legal services performed only 10% to 30% of the
 | Average Google Website Clicks Per Location | 10.9%      | 
 | Average Google Driving Directions Per Location  | 7%      | 
 
-This "underperformance" could simply be due to the fact that legal services is not as in-demand as the average of all industries. Still, CTR, for instance, is not directly demand dependant. It seems that legal services have the possiblity to improve their longtail keyword CTR.   
+This “underperformance” could simply be due to the fact that legal services are not as in-demand as the average of all industries. Still, CTR, for instance, is not directly demand-dependent. It seems that legal services can improve their longtail keyword CTR.     
 
 ## Imperfect Correlation Between Impressions and Clicks
 
-There is not a perfect correlation between the _Average Extended Network Impressions_ and _Average Extended Network Clicks_ for longtail keywords. We could expect that when impressions increase, clicks directly follow. This works quite well when looking at the average of the whole industry, the Pearson correlation coefficient (r) is 0.82 (no correlation is 0 and perfect correlation is 1). Fluctuations in the impressions are well reflected in the clicks, albeit not perfectly.  
+There is not a perfect correlation between _average extended network impressions_ and _average extended network clicks_ for longtail keywords. We expect that when impressions increase, clicks directly follow. This works quite well when looking at the average for the whole industry, the Pearson correlation coefficient (r) is 0.82 (no correlation is represented by 0 and a perfect correlation is represented by 1). Fluctuations in the impressions are well reflected in the clicks, albeit not perfectly.   
 
-However, this is not the case for the legal services, the Pearson correlation coefficient (r) is only 0.21. It is unclear why fluctuations in the impressions are less well reflected in the clicks for legal services. It could be an artifact due to the smaller samples size, but Yext is publishing data about 5,409 businesses active in the legal services. That is a quite large sample already.  
-
+However, this is not the case for legal services, for which the Pearson correlation coefficient (r) is only 0.21. It is unclear why fluctuations in impressions are less well reflected by clicks for legal services. It could be an artifact due to the small samples size, but Yext publishes data about 5,409 businesses that are active in the legal services industry, which is a quite large sample.
 
 
 
