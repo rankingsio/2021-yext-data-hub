@@ -13,7 +13,7 @@ Repo for the analysis for the Yext Search Data Hub for rankings.io.
 * Chris Dreyer ([Rankings.io](https://rankings.io/))
 
 ## About
-Yext, a company providing _entreprise search_ solutions based on Natural Language Processing and AI, publish anonymized data on their [Search Data Hub](https://www.yext.com/search-data-hub). These data are samples of listing and local page data across a variety of search engines, and other digital endpoints collected by Yext from their clients. They allow for exploring insights on consumer behavior trends — including shifts in search volume and foot traffic trends by industry.  
+Yext, a company providing _entreprise search_ solutions based on natural language processing and AI, publish anonymized data on their [Search Data Hub](https://www.yext.com/search-data-hub). These data are samples of listing and local page data across a variety of search engines, and other digital endpoints collected by Yext from their clients. They allow for exploring insights on consumer behavior trends — including shifts in search volume and foot traffic trends by industry.  
 
 Yext kindly provided us with a subset of the data from the Search Data Hub: data about Legal Services (subvertical) coming from U.S. companies. We enriched these data with some key spot comparisons observed directly on the online Search Data Hub.  
 
