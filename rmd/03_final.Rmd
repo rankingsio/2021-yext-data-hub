@@ -539,15 +539,15 @@ maps + searches
 ```
 
 
-The _Average Google Maps Views Per Location_ decreased by 73.6% between February and April 2020, at the beginning of the COVID pandemic, and is slowly recovering.   
+The _average Google Maps views per location_ decreased by 73.6% between February and April 2020, at the beginning of the COVID pandemic, and is slowly recovering   
 
-The _Average Google Search Views Per Location_ is growing steadily since mid-2020. It has never been so high.   
+The _average Google Search views per location_ has been growing steadily since mid-2020. It has never been so high.    
 
-We note the importance of a presence on Google Maps for companies active in _legal services_ as the average number of maps views is larger than the average number of search views.  
+We note the importance of having a presence on Google Maps for companies that are active in the _legal services_ sector because the average number of map views is larger than the average number of search views.  
 
 #### Industry Comparison
 
-We compare the Google Maps and Search Views from the _legal services_ to the same metrics for _all the industries_. By doing so, we compare the performance of listings in the _legal services_ to the global average.   
+We compared the Google Maps and Google Search views in the _legal services_ sector to the same metric averages for _all industries_. By doing so, we compared the performance of listings in the _legal services_ sector to the global average.
 
 ```{r Google_Mapsandsearch_Views, fig.width=8, fig.height=4.5}
 
@@ -653,7 +653,7 @@ Map_Views + Search_Views
 
 ```
 
-The trends in the _legal services_ follow the trends of the global average of all industries very well. With one notable difference, the average of Google Maps Views and Google Search Views per location is much smaller than the global average. The average of Google Maps Views in the _legal services_ is on average only `r round(avg_map_views_legalservices/avg_map_views_allindustry *100, 1)`% of the global average. The average of Google Search Views in the _legal services_ is on average only `r round(avg_search_views_legalservices/avg_search_views_allindustry *100, 1)`% of the global average. Note the logarithmic scale on the y-axis. It is used because it allows for a better comparison of the trends despite the difference in magnitude.  
+The trends in the _legal services_ sector follow the global average trends in all industries very well with one notable difference, the average Google Maps views and Google Search views per location are much lower than the global averages. The average Google Maps views in the _legal services_ sector is only `r round(avg_map_views_legalservices/avg_map_views_allindustry *100, 1)`% of the global average. The average Google Search views in the _legal services_ sector is on average only `r round(avg_search_views_legalservices/avg_search_views_allindustry *100, 1)`% of the global average for all industries. Note the logarithmic scale on the y-axis. It is used because it allows for a better comparison of the trends, despite their difference in magnitude.   
 
 ```{r, fig.width=8, fig.height=4.5, include=FALSE}
 
@@ -713,7 +713,7 @@ rcor_legalVSindustry_search <- cor(
 
 #### Google Phone Calls
 
-The _Average Google Phone Calls Per Location_ represents the number of times a user clicked on the phone call link from a Google listing. There was a clear dip of around -30% at the onset of the COVID pandemic. This metric has reached the maximum level again since.    
+_Average Google Phone Calls Per Location_ represents the number of times uses clicked on the phone call link from a Google listing. There was a clear dip of around -30% at the onset of the COVID pandemic. This metric has reached the maximum level again since then.     
 
 ```{r , out.width="500px"}
 
@@ -739,7 +739,7 @@ yext_data$G_PCs %>%
 
 #### Google Website Clicks
 
-The _Average Google Website Clicks Per Location_ represents the number of times a consumer clicked through to the corporate domain from a location page. It seems that there was a small dip at the onset of the COVID pandemic, but it is less clear.     
+_Average Google Website Clicks Per Location_ represents the number of times a consumer clicked through to the corporate domain from a location page. It seems that there was a small dip at the onset of the COVID pandemic, but it is less clear.      
 
 ```{r , out.width="500px"}
 yext_data$G_PCs %>%
@@ -759,7 +759,7 @@ yext_data$G_PCs %>%
 
 #### Google Driving Directions
 
-The _Average Google Driving Directions Per Location_ represents the number of times a consumer clicked to get driving directions from the location pages. This metric was clearly affected by the COVID pandemic. It dropped by 80% between February and April 2020. It is slowly recovering, now reaching about 80% of the pre-pandemic level.      
+_Average Google Driving Directions Per Location_ represents the number of times consumers clicked to get driving directions from a location page. This metric was clearly affected by the COVID pandemic. It dropped by 80% between February and April 2020. It is slowly recovering, now reaching about 80% of its pre-pandemic level.       
 
 ```{r , out.width="500px"}
 yext_data$G_DDs %>% 
@@ -936,11 +936,12 @@ Phone_Calls + Website_Clicks + Driving_Directions
 
 ```
 
-On the contrary to the _legal services_, we do not see a gap at the onset of the COVID pandemic for the average of all industries. The _Average Google Phone Calls Per Location_ for the _legal services_ is only `r round(avg_phone_call_legal/avg_phone_call_all*100,1)`% of the global average.   
+Contrary to in the _legal services_ sector, we do not see a gap at the onset of the COVID pandemic for the average of all industries. The _Average Google Phone Calls Per Location_ for the legal services sector is only `r round(avg_phone_call_legal/avg_phone_call_all*100,1)`% of the global average.   
 
-The _Average Google Website Clicks Per Location_ for the _legal services_ is fluctuating similarly to the average of all industries. The _Average Google Website Clicks Per Location_ for the _legal services_ is only `r round(avg_website_clicks_legal/avg_website_clicks_all*100,1)`% of the global average.    
+The _Average Google Website Clicks Per Location_ for the _legal services_ sector fluctuates similarly to the average for all industries. It is only `r round(avg_website_clicks_legal/avg_website_clicks_all*100,1)`% of the global average.   
 
-The _Average Google Driving Directions Per Location_ for the _legal services_ is behaving similarly to the average of all industries. The recovery after the onset of the pandemic is similar, albeit a bit slower. This might reflect the fact that _legal services_ can more easily be managed remotely than other industries. The _Average Google Driving Directions Per Location_ for the _legal services_ is only `r round(avg_driving_directions_legal/avg_driving_directions_all*100,1)`% of the global average.  
+The _Average Google Driving Directions Per Location_ for the _legal services_ is behaving similarly to the average of all industries. The recovery after the onset of the pandemic is similar, albeit a bit slower. This might reflect the fact that _legal services_ can more easily be managed remotely than other industries. The _Average Google Driving Directions Per Location_ for the _legal services_ is only% of the global average.  
+The _Average Google Driving Directions Per Location_ for the _legal services_ sector is similar to the average for all industries. The recovery after the onset of the pandemic is similar, albeit a bit slower. This might reflect the fact that _legal services_ listings can be more easily managed remotely than listings in other industries. The _Average Google Driving Directions Per Location_ for the legal services sector is only `r round(avg_driving_directions_legal/avg_driving_directions_all*100,1)`% of the global average.
 
 # Summary and Main Findings
 
