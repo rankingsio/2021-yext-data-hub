@@ -1,9 +1,9 @@
 ---
-title: "Yext Search Data Hub"
+title: "Yext Legal Services Data Analysis"
 author: |
   | Lead: Chris Dreyer ([rankings.io](https://rankings.io/))
   | Support: François Delavy & Daniel Kupka ([frontpagedata.com](https://frontpagedata.com/))
-date: "Last updated on 2021-12-04"
+date: "Last updated on 2021-12-13"
 output:
   html_document:
     theme: paper
