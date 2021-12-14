@@ -1,4 +1,4 @@
-rmarkdown::render(here::here("rmd", "final.Rmd"))
+rmarkdown::render(here::here("rmd", "03_final.Rmd"), output_options = c("self_contained = F"))
 
 # name study like FTP_CTR_STUDY in environ-file
 usethis::edit_r_environ()
